@@ -56,10 +56,9 @@ cdef class FrogOptions:
 
 
 
-    def __setitem__(self, key):
+    def __setitem__(self, key, value):
         key = key.lower()
         if key in ('dotok','tok'):
-            self._setbools(key, value)
             self.capi.doTok = bool(value)
         elif key in ('dolemma','lemma'):
             self.capi.doLemma = bool(value)
@@ -95,11 +94,11 @@ cdef class Frog:
 
         self.capi = new frog_classes.FrogAPI(&options.capi, &configuration, &logstream)
 
-    def processdocument(str text):
-
-        #ifstream IN( infilename.c_str() );
-        #Document doc = tokenizer.tokenize( IN );
-        #Test( doc, os, false, xmlOutFile );
+    def processdocument(self, str text):
+        cdef Document doc = self.capi.tokenizer.tokenizestring( text.encode('utf-8') );
+        cdef frog_classes.ostream outstream
+        self.capi.Test(doc, outstream, False)
+        #TODO: Parse outstream into strings on C++ side
 
     def __del__(self):
         del self.capi

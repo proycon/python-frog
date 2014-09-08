@@ -16,7 +16,7 @@ from libfolia_classes cimport Document
 
 cdef extern from "<iostream>" namespace "std":
     cdef cppclass ostream:
-        pass
+        ostream()
 
     cdef cppclass istream:
         pass
@@ -24,6 +24,8 @@ cdef extern from "<iostream>" namespace "std":
     extern ostream cout
     extern ostream cerr
 
+cdef extern from "<sstream>" namespace "std":
+    cdef cppclass ostringstream:
 
 cdef extern from "ticcutils/Configuration.h" namespace "TiCC":
     cdef cppclass Configuration:
@@ -39,6 +41,10 @@ cdef extern from "ticcutils/LogStream.h" namespace "TiCC":
 cdef extern from "frog/Frog.h":
     cdef cppclass TimerBlock:
         pass
+
+cdef extern from "frog/ucto_tokenizer_mod.h":
+    cdef cppclass UctoTokenizer:
+        Document tokenizestring( string )
 
 cdef extern from "frog/FrogAPI.h":
     cdef cppclass FrogOptions:
@@ -74,7 +80,10 @@ cdef extern from "frog/FrogAPI.h":
 
         int maxParserTokens
 
+
     cdef cppclass FrogAPI:
+        UctoTokenizer * tokenizer
+
         FrogAPI(FrogOptions * options, Configuration * configuration, LogStream * logstream) nogil
         ~FrogAPI() nogil
 
