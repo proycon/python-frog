@@ -19,12 +19,37 @@ import os.path
 cimport frog_classes
 cimport libfolia_classes
 
+try:
+    from pynlpl.formats.folia import Document as PynlplFoliaDocument
+    HASPYNLPL = True
+except ImportError:
+    HASPYNLPL = False
+    class PynlplFoliaDocument:
+        pass
+
+
+
 cdef class Document:
     cdef frog_classes.Document capi
 
 
 
 cdef class FrogOptions:
+    """Options for Frog, passed as keyword arguments to the constructor. Also accessible like dictionary keys.
+
+        tok - True/False - Do tokenisation? (default: True)
+        lemma - True/False - Do lemmatisation? (default: True)
+        morph - True/False - Do morpholigical analysis? (default: True)
+        daringmorph - True/False - Do morphological analysis in new experimental style? (default: False)
+        mwu - True/False - Do Multi Word Unit detection? (default: True)
+        chunking - True/False - Do Chunking/Shallow parsing? (default: True)
+        ner - True/False - Do Named Entity Recognition? (default: True)
+        parser - True/False - Do Dependency Parsing? (default: True)
+        xmlin - True/False - Input is FoLiA XML (default: False)
+        xmlout - True/False - Output is FoLiA XML (default: False)
+        docid - str - Document ID (for FoLiA)
+
+    """
     cdef frog_classes.FrogOptions capi
 
     def __init__(self, **kwargs):
@@ -49,6 +74,10 @@ cdef class FrogOptions:
             return self.capi.doNER
         elif key in ('doparse','doparser','parse','parser'):
             return self.capi.doParse
+        elif key in ('doxmlin','xmlin','foliain'):
+            return self.capi.doXMLin
+        elif key in ('doxmlout','xmlout','foliaout'):
+            return self.capi.doXMLout
         elif key in ('docid'):
             return self.capi.docid
         else:
@@ -74,6 +103,10 @@ cdef class FrogOptions:
             self.capi.doNER = <bool>value
         elif key in ('doparse','doparser','parse','parser'):
             self.capi.doParse = <bool>value
+        elif key in ('doxmlin','xmlin','foliain'):
+            self.capi.doXMLin = <bool>value
+        elif key in ('doxmlout','xmlout','foliaout'):
+            self.capi.doXMLout = <bool>value
         elif key in ('docid'):
             self.capi.docid = <string>value
         else:
@@ -86,8 +119,11 @@ cdef class Frog:
     cdef frog_classes.FrogAPI * capi
 
     def __init__(self, FrogOptions options, str configurationfile):
+        """Initialises Frog, pass a FrogOptions instance and a configuration file"""
         cdef frog_classes.Configuration configuration
         cdef frog_classes.LogStream logstream
+
+        self.options = options
 
         if configurationfile:
             configuration.fill(configurationfile.encode('utf-8'))
@@ -119,9 +155,20 @@ cdef class Frog:
         return data
 
 
-    def process(self, str text):
-        """Invokes Frog on the specified text, the text is considered one document. The results from Frog are parsed into a list of dictionaries, one per token."""
-        return self.parsecolumns(self.process_raw(text))
+    def process(self, text):
+        """Invokes Frog on the specified text. The text may be a string, or a folia.Document instance if Frog was instantiated with xmlin=True. If xmlout=False (default), the results from Frog are parsed into a list of dictionaries, one per token; if True, a FoLiA Document instance is returned"""
+        if self.options['xmlin'] and HASPYNLPL and isinstance(text, PynlplFoliaDocument):
+            text = str(text)
+        elif not isinstance(text,str):
+            raise ValueError("Text should be a string or FoLiA Document instance")
+
+        if self.options['xmlout'] and HASPYNLPL:
+            if HASPYNLPL:
+                return PynlplFoliaDocument(string=self.process_raw(text))
+            else:
+                raise Exception("Unable to return a FoLiA Document. Pynlpl was not installed. Use process_raw() instead if you just want the XML output as string")
+        else:
+            return self.parsecolumns(self.process_raw(text))
 
 
     def __del__(self):
