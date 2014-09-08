@@ -59,23 +59,23 @@ cdef class FrogOptions:
     def __setitem__(self, key, value):
         key = key.lower()
         if key in ('dotok','tok'):
-            self.capi.doTok = bool(value)
+            self.capi.doTok = <bool>value
         elif key in ('dolemma','lemma'):
-            self.capi.doLemma = bool(value)
+            self.capi.doLemma = <bool>value
         elif key in ('domorph','morph'):
-            self.capi.doMorph = bool(value)
+            self.capi.doMorph = <bool>value
         elif key in ('dodaringmorph','daringmorph'):
-            self.capi.doDaringMorph = bool(value)
+            self.capi.doDaringMorph = <bool>value
         elif key in ('domwu','mwu'):
-            self.capi.doMwu = bool(value)
+            self.capi.doMwu = <bool>value
         elif key in ('doiob','iob','dochunking','chunking','shallowparsing'):
-            self.capi.doIOB = bool(value)
+            self.capi.doIOB = <bool>value
         elif key in ('doner','ner'):
-            self.capi.doNER = bool(value)
+            self.capi.doNER = <bool>value
         elif key in ('doparse','doparser','parse','parser'):
-            self.capi.doParse = bool(value)
+            self.capi.doParse = <bool>value
         elif key in ('docid'):
-            self.capi.docid = str(value)
+            self.capi.docid = <string>value
         else:
             raise KeyError("No such key: " + str(key))
 
@@ -95,10 +95,9 @@ cdef class Frog:
         self.capi = new frog_classes.FrogAPI(&options.capi, &configuration, &logstream)
 
     def processdocument(self, str text):
-        cdef Document doc = self.capi.tokenizer.tokenizestring( text.encode('utf-8') );
-        cdef frog_classes.ostream outstream
-        self.capi.Test(doc, outstream, False)
-        #TODO: Parse outstream into strings on C++ side
+        cdef libfolia_classes.Document doc = self.capi.tokenizer.tokenizestring( text.encode('utf-8') )
+        cdef string result = self.capi.Test(doc)
+        return result
 
     def __del__(self):
         del self.capi

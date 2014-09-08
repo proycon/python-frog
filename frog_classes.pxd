@@ -24,8 +24,6 @@ cdef extern from "<iostream>" namespace "std":
     extern ostream cout
     extern ostream cerr
 
-cdef extern from "<sstream>" namespace "std":
-    cdef cppclass ostringstream:
 
 cdef extern from "ticcutils/Configuration.h" namespace "TiCC":
     cdef cppclass Configuration:
@@ -37,6 +35,7 @@ cdef extern from "ticcutils/Configuration.h" namespace "TiCC":
 cdef extern from "ticcutils/LogStream.h" namespace "TiCC":
     cdef cppclass LogStream:
         LogStream()
+        LogStream(string prefix)
 
 cdef extern from "frog/Frog.h":
     cdef cppclass TimerBlock:
@@ -85,8 +84,8 @@ cdef extern from "frog/FrogAPI.h":
         UctoTokenizer * tokenizer
 
         FrogAPI(FrogOptions * options, Configuration * configuration, LogStream * logstream) nogil
-        ~FrogAPI() nogil
 
-        Test( Document doc, ostream outStream, bool hidetimers = False, string xmlOutFile = "") nogil
+        void Test( Document doc, ostream outStream, bool hidetimers = False, string xmlOutFile = "") nogil
+        string Test( Document doc, bool hidetimers = True) nogil #returns results as string
         void Test( string infilename, ostream os, string xmlOutFile) nogil
 
