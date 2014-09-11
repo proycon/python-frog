@@ -128,7 +128,7 @@ cdef class Frog:
         if configurationfile:
             configuration.fill(configurationfile.encode('utf-8'))
 
-        self.capi = new frog_classes.FrogAPI(&options.capi, &configuration, &logstream)
+        self.capi = new frog_classes.FrogAPI(options.capi, configuration, &logstream)
 
     def process_raw(self, str text):
         """Invokes Frog on the specified text, the text is considered one document. The raw results from Frog are return as a string"""

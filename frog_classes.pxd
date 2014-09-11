@@ -83,7 +83,7 @@ cdef extern from "frog/FrogAPI.h":
     cdef cppclass FrogAPI:
         UctoTokenizer * tokenizer
 
-        FrogAPI(FrogOptions * options, Configuration * configuration, LogStream * logstream) nogil
+        FrogAPI(FrogOptions options, Configuration configuration, LogStream * logstream) nogil
 
         void Test( Document doc, ostream outStream, bool hidetimers = False, string xmlOutFile = "") nogil
         string Test( Document doc, bool hidetimers = True) nogil #returns results as string
