@@ -132,6 +132,14 @@ cdef class Frog:
 
         self.capi = new frog_classes.FrogAPI(options.capi, configuration, &logstream)
 
+    def test(self, str text):
+        """Invokes Frog on the specified text, the text is considered one document. The raw results from Frog are return as a string"""
+        cdef libfolia_classes.Document doc = self.capi.tokenizer.tokenizestring( text.encode('utf-8') )
+        cdef string s = doc.toXml()
+        print(s.encode('utf-8'))
+        #cdef string result = self.capi.Test(doc)
+        #return result.decode('utf-8')
+
     def process_raw(self, str text):
         """Invokes Frog on the specified text, the text is considered one document. The raw results from Frog are return as a string"""
         cdef libfolia_classes.Document doc = self.capi.tokenizer.tokenizestring( text.encode('utf-8') )
