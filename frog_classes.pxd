@@ -85,7 +85,7 @@ cdef extern from "frog/FrogAPI.h":
 
         FrogAPI(FrogOptions options, Configuration configuration, LogStream * logstream)
 
-        string Test( Document * doc, bool hidetimers = True) #returns results as string
+        string Testtostring( Document * doc) #returns results as string
 
         #void Test( Document doc, ostream outStream, bool hidetimers = False, string xmlOutFile = "") nogil
         #void Test( string infilename, ostream os, string xmlOutFile) nogil

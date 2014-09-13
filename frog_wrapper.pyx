@@ -136,15 +136,17 @@ cdef class Frog:
     def process_raw(self, str text):
         """Invokes Frog on the specified text, the text is considered one document. The raw results from Frog are return as a string"""
         cdef libfolia_classes.Document * doc = self.capi.tokenizer.tokenizehelper( text.encode('utf-8') )
-        cdef string result = self.capi.Test(doc)
-        return result.decode('utf-8')
+        cdef string result = self.capi.Testtostring(doc)
+        r = result.decode('utf-8')
+        del doc
+        return r
 
     def parsecolumns(self, str response):
         """Parse the raw Frog response"""
         columns = ('index','text','lemma','morph','pos','posprob','ner','chunker','depindex','dep')
         data = []
         for line in response.split('\n'):
-            if line.strip():
+            if not line.strip():
                 if data:
                     data[-1]['eos'] = True
             else:
@@ -155,6 +157,7 @@ cdef class Frog:
                             item[columns[i]] = float(field)
                         else:
                             item[columns[i]] = field
+                data.append(item)
         return data
 
 
