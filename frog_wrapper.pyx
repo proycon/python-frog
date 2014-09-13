@@ -119,30 +119,23 @@ cdef class FrogOptions:
 cdef class Frog:
     cdef frog_classes.FrogAPI * capi
     cdef FrogOptions options
+    cdef frog_classes.Configuration configuration
 
     def __init__(self, FrogOptions options, str configurationfile):
         """Initialises Frog, pass a FrogOptions instance and a configuration file"""
-        cdef frog_classes.Configuration configuration
         cdef frog_classes.LogStream logstream
 
         self.options = options
 
         if configurationfile:
-            configuration.fill(configurationfile.encode('utf-8'))
+            self.configuration.fill(configurationfile.encode('utf-8'))
 
-        self.capi = new frog_classes.FrogAPI(options.capi, configuration, &logstream)
+        self.capi = new frog_classes.FrogAPI(options.capi, self.configuration, &logstream)
 
-    def test(self, str text):
-        """Invokes Frog on the specified text, the text is considered one document. The raw results from Frog are return as a string"""
-        cdef libfolia_classes.Document doc = self.capi.tokenizer.tokenizestring( text.encode('utf-8') )
-        cdef string s = doc.toXml()
-        print(s.encode('utf-8'))
-        #cdef string result = self.capi.Test(doc)
-        #return result.decode('utf-8')
 
     def process_raw(self, str text):
         """Invokes Frog on the specified text, the text is considered one document. The raw results from Frog are return as a string"""
-        cdef libfolia_classes.Document doc = self.capi.tokenizer.tokenizestring( text.encode('utf-8') )
+        cdef libfolia_classes.Document * doc = self.capi.tokenizer.tokenizehelper( text.encode('utf-8') )
         cdef string result = self.capi.Test(doc)
         return result.decode('utf-8')
 
@@ -158,7 +151,7 @@ cdef class Frog:
                 item = {}
                 for i, field in enumerate(line.split('\t')):
                     if field:
-                        if field == 'posprob':
+                        if columns[i] == 'posprob':
                             item[columns[i]] = float(field)
                         else:
                             item[columns[i]] = field

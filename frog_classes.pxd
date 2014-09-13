@@ -43,7 +43,7 @@ cdef extern from "frog/Frog.h":
 
 cdef extern from "frog/ucto_tokenizer_mod.h":
     cdef cppclass UctoTokenizer:
-        Document tokenizestring( string )
+        Document * tokenizehelper( string)
 
 cdef extern from "frog/FrogAPI.h":
     cdef cppclass FrogOptions:
@@ -83,9 +83,10 @@ cdef extern from "frog/FrogAPI.h":
     cdef cppclass FrogAPI:
         UctoTokenizer * tokenizer
 
-        FrogAPI(FrogOptions options, Configuration configuration, LogStream * logstream) nogil
+        FrogAPI(FrogOptions options, Configuration configuration, LogStream * logstream)
 
-        void Test( Document doc, ostream outStream, bool hidetimers = False, string xmlOutFile = "") nogil
-        string Test( Document doc, bool hidetimers = True) nogil #returns results as string
-        void Test( string infilename, ostream os, string xmlOutFile) nogil
+        string Test( Document * doc, bool hidetimers = True) #returns results as string
+
+        #void Test( Document doc, ostream outStream, bool hidetimers = False, string xmlOutFile = "") nogil
+        #void Test( string infilename, ostream os, string xmlOutFile) nogil
 
