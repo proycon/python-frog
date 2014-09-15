@@ -48,6 +48,7 @@ cdef class FrogOptions:
         xmlin - True/False - Input is FoLiA XML (default: False)
         xmlout - True/False - Output is FoLiA XML (default: False)
         docid - str - Document ID (for FoLiA)
+        numThreads - int - Number of threads to use (default: unset, unlimited)
 
     """
     cdef frog_classes.FrogOptions capi
@@ -81,6 +82,8 @@ cdef class FrogOptions:
             return self.capi.doXMLout
         elif key in ('docid'):
             return self.capi.docid
+        elif key in ('numthreads','threads'):
+            return self.capi.numThreads
         else:
             raise KeyError("No such key: " + str(key))
 
@@ -110,6 +113,8 @@ cdef class FrogOptions:
             self.capi.doXMLout = <bool>value
         elif key in ('docid'):
             self.capi.docid = <string>value
+        elif key in ('numthreads','threads'):
+            self.capi.numThreads = <int>value
         else:
             raise KeyError("No such key: " + str(key))
 

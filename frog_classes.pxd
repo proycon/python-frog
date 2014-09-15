@@ -65,6 +65,7 @@ cdef extern from "frog/FrogAPI.h":
         bool doKanon
 
         int debugFlag
+        int numThreads
 
 
         bool interactive
