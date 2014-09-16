@@ -141,8 +141,7 @@ cdef class Frog:
     def process_raw(self, str text):
         """Invokes Frog on the specified text, the text is considered one document. The raw results from Frog are return as a string"""
         #cdef libfolia_classes.Document * doc = self.capi.tokenizer.tokenizehelper( text.encode('utf-8') )
-        #cdef string result = self.capi.Testtostring(doc)
-        cdef string result = self.capi.Testtostring(text.encode('utf-8'))
+        cdef string result = self.capi.Frogtostring(text.encode('utf-8'))
         r = result.decode('utf-8')
         return r
 
