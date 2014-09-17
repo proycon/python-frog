@@ -88,4 +88,5 @@ cdef extern from "frog/FrogAPI.h":
 
         string Frogtostring(string s)
 
-
+        string defaultConfigDir()
+        string defaultConfigFile()

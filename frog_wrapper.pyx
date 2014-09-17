@@ -130,7 +130,7 @@ cdef class Frog:
     cdef FrogOptions options
     cdef frog_classes.Configuration configuration
 
-    def __init__(self, FrogOptions options, str configurationfile):
+    def __init__(self, FrogOptions options, str configurationfile = ""):
         """Initialises Frog, pass a FrogOptions instance and a configuration file"""
         cdef frog_classes.LogStream logstream
 
@@ -138,6 +138,9 @@ cdef class Frog:
 
         if configurationfile:
             self.configuration.fill(configurationfile.encode('utf-8'))
+        else:
+            self.configuration.fill(self.capi.defaultConfigDir() + "/" self.capi.defaultConfigFile())
+
 
         self.capi = new frog_classes.FrogAPI(options.capi, self.configuration, &logstream)
 
