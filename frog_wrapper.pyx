@@ -84,6 +84,8 @@ cdef class FrogOptions:
             return self.capi.docid
         elif key in ('numthreads','threads'):
             return self.capi.numThreads
+        elif key in ('debug','debugflag'):
+            return self.capi.debugFlag
         else:
             raise KeyError("No such key: " + str(key))
 
@@ -111,6 +113,8 @@ cdef class FrogOptions:
             self.capi.doXMLin = <bool>value
         elif key in ('doxmlout','xmlout','foliaout'):
             self.capi.doXMLout = <bool>value
+        elif key in ('debug','debugflag'):
+            self.capi.debugFlag = <bool>value
         elif key in ('docid'):
             self.capi.docid = <string>value
         elif key in ('numthreads','threads'):
