@@ -139,7 +139,7 @@ cdef class Frog:
         if configurationfile:
             self.configuration.fill(configurationfile.encode('utf-8'))
         else:
-            self.configuration.fill(self.capi.defaultConfigDir() + self.capi.defaultConfigFile())
+            self.configuration.fill(self.capi.defaultConfigFile())
 
 
         self.capi = new frog_classes.FrogAPI(options.capi, self.configuration, &logstream)
