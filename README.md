@@ -17,7 +17,7 @@ Installation
 Usage
 ================
 
-Example::
+Example:
 
     import frog
     frog = frog.Frog(frog.FrogOptions(parser=False), "/etc/frog/frog.cfg")
@@ -25,6 +25,33 @@ Example::
     print("RAW OUTPUT=",output)
     output = frog.process("Dit is nog een test.")
     print("PARSED OUTPUT=",output)
+
+Output:
+
+    RAW OUTPUT= 1   Dit     dit     [dit]   VNW(aanw,pron,stan,vol,3o,ev)
+    0.777085        O       B-NP
+    2       is      zijn    [zijn]  WW(pv,tgw,ev)   0.999891        O
+    B-VP
+    3       een     een     [een]   LID(onbep,stan,agr)     0.999113        O
+    B-NP
+    4       test    test    [test]  N(soort,ev,basis,zijd,stan)     0.789112
+    O       I-NP
+
+
+    PARSED OUTPUT= [{'chunker': 'B-NP', 'index': '1', 'lemma': 'dit', 'ner':
+    'O', 'pos': 'VNW(aanw,pron,stan,vol,3o,ev)', 'posprob': 0.777085, 'text':
+    'Dit', 'morph': '[dit]'}, {'chunker': 'B-VP', 'index': '2', 'lemma':
+    'zijn', 'ner': 'O', 'pos': 'WW(pv,tgw,ev)', 'posprob': 0.999966, 'text':
+    'is', 'morph': '[zijn]'}, {'chunker': 'B-NP', 'index': '3', 'lemma': 'nog',
+    'ner': 'O', 'pos': 'BW()', 'posprob': 0.99982, 'text': 'nog', 'morph':
+    '[nog]'}, {'chunker': 'I-NP', 'index': '4', 'lemma': 'een', 'ner': 'O',
+    'pos': 'LID(onbep,stan,agr)', 'posprob': 0.995781, 'text': 'een', 'morph':
+    '[een]'}, {'chunker': 'I-NP', 'index': '5', 'lemma': 'test', 'ner': 'O',
+    'pos': 'N(soort,ev,basis,zijd,stan)', 'posprob': 0.903055, 'text': 'test',
+    'morph': '[test]'}, {'chunker': 'O', 'index': '6', 'eos': True, 'lemma':
+    '.', 'ner': 'O', 'pos': 'LET()', 'posprob': 1.0, 'text': '.', 'morph':
+    '[.]'}]
+
 
 Available keyword arguments for FrogOptions:
 
