@@ -14,12 +14,13 @@ extensions = [ Extension("frog",
                 include_dirs=[HOMEDIR + '/local/include/','/usr/include/', '/usr/include/libxml2','/usr/local/include/' ],
                 library_dirs=[HOMEDIR + '/local/lib/','/usr/lib','/usr/local/lib'],
                 libraries=['frog','ucto','folia'],
+                extra_compile_args=['--std=c++0x'],
                 pyrex_gdb=True
                 ) ]
 
 setup(
     name = 'python-frog',
-    version = '0.2.1',
+    version = '0.2.2',
     author_email = "proycon@anaproy.nl",
     description = ("Python binding to FROG, an NLP suite for Dutch doing part-of-speech tagging, lemmatisation, morphological analysis, named-entity recognition, shallow parsing, and dependency parsing."),
     requires = ['frog (>=0.12.20)'],
