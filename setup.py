@@ -8,11 +8,17 @@ from os.path import expanduser
 HOMEDIR = expanduser("~")
 
 
+includedirs = [HOMEDIR + '/local/include/','/usr/include/', '/usr/include/libxml2','/usr/local/include/' ]
+libdirs = [HOMEDIR + '/local/lib/','/usr/lib','/usr/local/lib']
+if 'VIRTUAL_ENV' in os.environ:
+    includedirs.insert(0,os.environ['VIRTUAL_ENV'] + '/include')
+    libdirs.insert(0,os.environ['VIRTUAL_ENV'] + '/lib')
+
 extensions = [ Extension("frog",
                 [ "frog_classes.pxd", "frog_wrapper.pyx"],
                 language='c++',
-                include_dirs=[HOMEDIR + '/local/include/','/usr/include/', '/usr/include/libxml2','/usr/local/include/' ],
-                library_dirs=[HOMEDIR + '/local/lib/','/usr/lib','/usr/local/lib'],
+                include_dirs=includedirs,
+                library_dirs=libdirs,
                 libraries=['frog','ucto','folia'],
                 extra_compile_args=['--std=c++0x'],
                 pyrex_gdb=True
@@ -20,7 +26,7 @@ extensions = [ Extension("frog",
 
 setup(
     name = 'python-frog',
-    version = '0.2.2',
+    version = '0.2.3',
     author_email = "proycon@anaproy.nl",
     description = ("Python binding to FROG, an NLP suite for Dutch doing part-of-speech tagging, lemmatisation, morphological analysis, named-entity recognition, shallow parsing, and dependency parsing."),
     requires = ['frog (>=0.12.20)'],
