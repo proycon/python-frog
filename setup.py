@@ -20,13 +20,13 @@ extensions = [ Extension("frog",
                 include_dirs=includedirs,
                 library_dirs=libdirs,
                 libraries=['frog','ucto','folia'],
-                extra_compile_args=['--std=c++0x'],
+                extra_compile_args=['--std=c++11'],
                 pyrex_gdb=True
                 ) ]
 
 setup(
     name = 'python-frog',
-    version = '0.2.3',
+    version = '0.2.4',
     author_email = "proycon@anaproy.nl",
     description = ("Python binding to FROG, an NLP suite for Dutch doing part-of-speech tagging, lemmatisation, morphological analysis, named-entity recognition, shallow parsing, and dependency parsing."),
     requires = ['frog (>=0.12.20)'],
