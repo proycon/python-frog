@@ -20,7 +20,7 @@ extensions = [ Extension("frog",
                 include_dirs=includedirs,
                 library_dirs=libdirs,
                 libraries=['frog','ucto','folia'],
-                extra_compile_args=['--std=c++11'],
+                extra_compile_args=['--std=c++0x'],
                 pyrex_gdb=True
                 ) ]
 
