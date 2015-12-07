@@ -1,3 +1,7 @@
+from libcpp.string cimport string
+from libcpp.vector cimport vector
+from libcpp cimport bool
+from libc.stdint cimport *
 
 cdef extern from "libfolia/foliautils.h" namespace "folia":
     cdef int BASE
