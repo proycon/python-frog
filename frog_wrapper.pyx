@@ -145,11 +145,11 @@ cdef class Frog:
         self.capi = new frog_classes.FrogAPI(options.capi, self.configuration, &self.logstream)
 
 
-    def process_raw(self, str text):
+    def process_raw(self, text):
         """Invokes Frog on the specified text, the text is considered one document. The raw results from Frog are return as a string"""
         #cdef libfolia_classes.Document * doc = self.capi.tokenizer.tokenizehelper( text.encode('utf-8') )
-        cdef string result = self.capi.Frogtostring(text.encode('utf-8'))
-        r = result.decode('utf-8')
+        cdef string result = self.capi.Frogtostring(self._encode_text(text))
+        r = result.decode('utf-8') if type(text) == unicode else result
         return r
 
     def parsecolumns(self, str response):
@@ -190,4 +190,9 @@ cdef class Frog:
 
     def __del__(self):
         del self.capi
+
+    def _encode_text(self, text):
+        if type(text) == unicode:
+            return text.encode('utf-8')
+        return text
 
