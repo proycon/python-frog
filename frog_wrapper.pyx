@@ -153,7 +153,7 @@ cdef class Frog:
         r = result.decode('utf-8') #if (sys.version < '3' and type(text) == unicode) or (sys.version > '3' and type(text) == str) else result
         return r
 
-    def parsecolumns(self, str response):
+    def parsecolumns(self, response):
         """Parse the raw Frog response"""
         columns = ('index','text','lemma','morph','pos','posprob','ner','chunker','depindex','dep')
         data = []
@@ -177,7 +177,7 @@ cdef class Frog:
         """Invokes Frog on the specified text. The text may be a string, or a folia.Document instance if Frog was instantiated with xmlin=True. If xmlout=False (default), the results from Frog are parsed into a list of dictionaries, one per token; if True, a FoLiA Document instance is returned"""
         if self.options['xmlin'] and HASPYNLPL and isinstance(text, PynlplFoliaDocument):
             text = str(text)
-        elif not isinstance(text,str):
+        elif not isinstance(text,str) and not (sys.version < '3' and isinstance(text,unicode)):
             raise ValueError("Text should be a string or FoLiA Document instance")
 
         if self.options['xmlout'] and HASPYNLPL:
