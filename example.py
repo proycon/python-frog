@@ -1,3 +1,5 @@
+from __future__ import print_function, unicode_literals
+
 import frog
 
 frog = frog.Frog(frog.FrogOptions(parser=False), "/etc/frog/frog.cfg")

@@ -16,6 +16,7 @@ from cython import address
 from libc.stdint cimport *
 from libcpp.utility cimport pair
 import os.path
+import sys
 cimport frog_classes
 cimport libfolia_classes
 
@@ -131,7 +132,7 @@ cdef class Frog:
     cdef frog_classes.Configuration configuration
     cdef frog_classes.LogStream logstream
 
-    def __init__(self, FrogOptions options, str configurationfile = ""):
+    def __init__(self, FrogOptions options, configurationfile = ""):
         """Initialises Frog, pass a FrogOptions instance and a configuration file"""
 
         self.options = options
@@ -149,7 +150,7 @@ cdef class Frog:
         """Invokes Frog on the specified text, the text is considered one document. The raw results from Frog are return as a string"""
         #cdef libfolia_classes.Document * doc = self.capi.tokenizer.tokenizehelper( text.encode('utf-8') )
         cdef string result = self.capi.Frogtostring(self._encode_text(text))
-        r = result.decode('utf-8') if type(text) == unicode else result
+        r = result.decode('utf-8') #if (sys.version < '3' and type(text) == unicode) or (sys.version > '3' and type(text) == str) else result
         return r
 
     def parsecolumns(self, str response):
@@ -192,7 +193,9 @@ cdef class Frog:
         del self.capi
 
     def _encode_text(self, text):
-        if type(text) == unicode:
+        if sys.version < '3' and type(text) == unicode:
             return text.encode('utf-8')
-        return text
+        if sys.version > '3' and type(text) == str:
+            return text.encode('utf-8')
+        return text #already was bytes or python2 str
 
