@@ -1,3 +1,6 @@
+.. image:: http://applejack.science.ru.nl/lamabadge.php/python-frog
+   :target: http://applejack.science.ru.nl/languagemachines/
+
 Frog for Python
 ===========
 
