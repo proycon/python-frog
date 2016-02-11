@@ -2,7 +2,7 @@
    :target: http://applejack.science.ru.nl/languagemachines/
 
 Frog for Python
-===========
+===================
 
 This is a Python binding to the Natural Language Processing suite Frog. Frog is
 intended for Dutch and performs part-of-speech tagging, lemmatisation,
@@ -11,14 +11,22 @@ dependency parsing. The tool itseelf is implemented in C++
 (http://ilk.uvt.nl/frog).
 
 Installation
-==============
+----------------
 
- * Make sure to first install Frog itself (http://ilk.uvt.nl/frog or from git http://github.com/proycon/frog ) and its dependencies
+Easy
+~~~~~~~~~~
+
+For easy installation, please use our LaMachine distribution (https://proycon.github.io/LaMachine).
+
+Manual
+~~~~~~~~~~~~
+
+ * Make sure to first install Frog itself (https://languagemachines.github.io/frog) and all its dependencies
  * Install Cython if not yet available on your system: ``$ sudo apt-get cython cython3`` (Debian/Ubuntu, may differ for others)
  * Run:  ``$ sudo python setup.py install``
 
 Usage
-================
+------------------
 
 Example:
 
