@@ -3,7 +3,7 @@ from libcpp.vector cimport vector
 from libcpp cimport bool
 from libc.stdint cimport *
 
-cdef extern from "libfolia/foliautils.h" namespace "folia":
+cdef extern from "libfolia/folia.h" namespace "folia":
     cdef int BASE
     cdef int TextContent_t
     cdef int Text_t
@@ -96,7 +96,6 @@ cdef extern from "libfolia/foliautils.h" namespace "folia":
     cdef int Part_t
 
 
-cdef extern from "libfolia/folia.h" namespace "folia":
     cdef cppclass FoliaElement:
         #FoliaElement * index(int) +KeyError
         int size()
@@ -104,8 +103,6 @@ cdef extern from "libfolia/folia.h" namespace "folia":
         string xmltag()
 
 
-
-cdef extern from "libfolia/document.h" namespace "folia":
     cdef cppclass Document:
         Document()
         Document(string kwargs)

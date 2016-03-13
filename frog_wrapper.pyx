@@ -17,8 +17,8 @@ from libc.stdint cimport *
 from libcpp.utility cimport pair
 import os.path
 import sys
-cimport frog_classes
 cimport libfolia_classes
+cimport frog_classes
 
 try:
     from pynlpl.formats.folia import Document as PynlplFoliaDocument
