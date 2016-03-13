@@ -41,7 +41,7 @@ cdef class FrogOptions:
         tok - True/False - Do tokenisation? (default: True)
         lemma - True/False - Do lemmatisation? (default: True)
         morph - True/False - Do morpholigical analysis? (default: True)
-        daringmorph - True/False - Do morphological analysis in new experimental style? (default: False)
+        deepmorph - True/False - Do morphological analysis in new experimental style? (default: False)
         mwu - True/False - Do Multi Word Unit detection? (default: True)
         chunking - True/False - Do Chunking/Shallow parsing? (default: True)
         ner - True/False - Do Named Entity Recognition? (default: True)
@@ -67,8 +67,8 @@ cdef class FrogOptions:
             return self.capi.doLemma
         elif key in ('domorph','morph'):
             return self.capi.doMorph
-        elif key in ('dodaringmorph','daringmorph'):
-            return self.capi.doDaringMorph
+        elif key in ('dodaringmorph','daringmorph','deepmorph','dodeepmorph'):
+            return self.capi.doDeepMorph
         elif key in ('domwu','mwu'):
             return self.capi.doMwu
         elif key in ('doiob','iob','dochunking','chunking','shallowparsing'):
@@ -100,8 +100,8 @@ cdef class FrogOptions:
             self.capi.doLemma = <bool>value
         elif key in ('domorph','morph'):
             self.capi.doMorph = <bool>value
-        elif key in ('dodaringmorph','daringmorph'):
-            self.capi.doDaringMorph = <bool>value
+        elif key in ('dodaringmorph','daringmorph','deepmorph','dodeepmorph'):
+            self.capi.doDeepMorph = <bool>value
         elif key in ('domwu','mwu'):
             self.capi.doMwu = <bool>value
         elif key in ('doiob','iob','dochunking','chunking','shallowparsing'):

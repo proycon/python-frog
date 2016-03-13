@@ -50,7 +50,7 @@ cdef extern from "frog/FrogAPI.h":
         bool doTok
         bool doLemma
         bool doMorph
-        bool doDaringMorph
+        bool doDeepMorph
         bool doMwu
         bool doIOB
         bool doNER
