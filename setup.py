@@ -15,7 +15,7 @@ if 'VIRTUAL_ENV' in os.environ:
     libdirs.insert(0,os.environ['VIRTUAL_ENV'] + '/lib')
 
 extensions = [ Extension("frog",
-                [ "frog_classes.pxd", "frog_wrapper.pyx"],
+                [ "libfolia_classes.pxd", "frog_classes.pxd", "frog_wrapper.pyx"],
                 language='c++',
                 include_dirs=includedirs,
                 library_dirs=libdirs,
@@ -26,7 +26,7 @@ extensions = [ Extension("frog",
 
 setup(
     name = 'python-frog',
-    version = '0.3.0',
+    version = '0.3.1',
     author_email = "proycon@anaproy.nl",
     description = ("Python binding to FROG, an NLP suite for Dutch doing part-of-speech tagging, lemmatisation, morphological analysis, named-entity recognition, shallow parsing, and dependency parsing."),
     requires = ['frog (>=0.13.3)'],
