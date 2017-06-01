@@ -30,11 +30,13 @@ Usage
 
 Example:
 
+.. python::
+
     from __future__ import print_function, unicode_literals #to make this work on Python 2 as well as Python 3
 
     import frog
 
-    frog = frog.Frog(frog.FrogOptions(parser=False), "/etc/frog/frog.cfg")
+    frog = frog.Frog(frog.FrogOptions(parser=False))
     output = frog.process_raw("Dit is een test")
     print("RAW OUTPUT=",output)
     output = frog.process("Dit is nog een test.")
