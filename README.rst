@@ -21,9 +21,9 @@ For easy installation, please use our LaMachine distribution (https://proycon.gi
 Manual
 ~~~~~~~~~~~~
 
- * Make sure to first install Frog itself (https://languagemachines.github.io/frog) and all its dependencies
- * Install Cython if not yet available on your system: ``$ sudo apt-get cython cython3`` (Debian/Ubuntu, may differ for others)
- * Run:  ``$ sudo python setup.py install``
+* Make sure to first install Frog itself (https://languagemachines.github.io/frog) and all its dependencies
+* Install Cython if not yet available on your system: ``$ sudo apt-get cython cython3`` (Debian/Ubuntu, may differ for others)
+* Run:  ``$ sudo python setup.py install``
 
 Usage
 ------------------
