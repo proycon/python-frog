@@ -28,9 +28,7 @@ Manual
 Usage
 ------------------
 
-Example:
-
-.. python::
+Example::
 
     from __future__ import print_function, unicode_literals #to make this work on Python 2 as well as Python 3
 
