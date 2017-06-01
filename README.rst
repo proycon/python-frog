@@ -72,18 +72,18 @@ Output::
 
 Available keyword arguments for FrogOptions:
 
- * tok - True/False - Do tokenisation? (default: True)
- * lemma - True/False - Do lemmatisation? (default: True)
- * morph - True/False - Do morpholigical analysis? (default: True)
- * daringmorph - True/False - Do morphological analysis in new experimental style? (default: False)
- * mwu - True/False - Do Multi Word Unit detection? (default: True)
- * chunking - True/False - Do Chunking/Shallow parsing? (default: True)
- * ner - True/False - Do Named Entity Recognition? (default: True)
- * parser - True/False - Do Dependency Parsing? (default: False). The Parser won't work in this binding!
- * xmlin - True/False - Input is FoLiA XML (default: False)
- * xmlout - True/False - Output is FoLiA XML (default: False)
- * docid - str - Document ID (for FoLiA)
- * numThreads - int - Number of threads to use (default: unset, unlimited)
+* tok - True/False - Do tokenisation? (default: True)
+* lemma - True/False - Do lemmatisation? (default: True)
+* morph - True/False - Do morpholigical analysis? (default: True)
+* daringmorph - True/False - Do morphological analysis in new experimental style? (default: False)
+* mwu - True/False - Do Multi Word Unit detection? (default: True)
+* chunking - True/False - Do Chunking/Shallow parsing? (default: True)
+* ner - True/False - Do Named Entity Recognition? (default: True)
+* parser - True/False - Do Dependency Parsing? (default: False). The Parser won't work in this binding!
+* xmlin - True/False - Input is FoLiA XML (default: False)
+* xmlout - True/False - Output is FoLiA XML (default: False)
+* docid - str - Document ID (for FoLiA)
+* numThreads - int - Number of threads to use (default: unset, unlimited)
 
 
 
