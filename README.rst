@@ -28,7 +28,9 @@ Manual
 Usage
 ------------------
 
-Example::
+Example:
+
+.. code:: python
 
     from __future__ import print_function, unicode_literals #to make this work on Python 2 as well as Python 3
 
@@ -41,7 +43,7 @@ Example::
     print("PARSED OUTPUT=",output)
 
 
-Output:
+Output::
 
     RAW OUTPUT= 1   Dit     dit     [dit]   VNW(aanw,pron,stan,vol,3o,ev)
     0.777085        O       B-NP
