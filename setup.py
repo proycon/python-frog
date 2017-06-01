@@ -26,10 +26,10 @@ extensions = [ Extension("frog",
 
 setup(
     name = 'python-frog',
-    version = '0.3.2',
+    version = '0.3.3',
     author_email = "proycon@anaproy.nl",
     description = ("Python binding to FROG, an NLP suite for Dutch doing part-of-speech tagging, lemmatisation, morphological analysis, named-entity recognition, shallow parsing, and dependency parsing."),
-    requires = ['frog (>=0.13.4)'],
+    requires = ['frog (>=0.13.6)'],
     license = "GPL",
     keywords = "nlp computational_linguistics dutch pos lemmatizer",
     url = "https://github.com/proycon/python-frog",
