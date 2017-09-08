@@ -85,6 +85,33 @@ Available keyword arguments for FrogOptions:
 * docid - str - Document ID (for FoLiA)
 * numThreads - int - Number of threads to use (default: unset, unlimited)
 
+FoLiA support
+------------------
+
+Frog supports output in the `FoLiA XML format <https://proycon.github.io/folia>`_ (set ``FrogOptions(xmlout=True)``), as
+well as FoLiA input (set ``FrogOptions(xmlin=True)``). The FoLiA format exposes more details about the linguistic
+annotation in a more structured and more formal way.
+
+Whenever FoLiA output is requested, the ``process()`` method will return an instance of ``folia.Document``, which is
+provided by the PyNLPL library (``pynlpl.formats.folia`` module).  This loads the entire FoLiA document in memory and
+allows you to inspect it in any way you see fit. Extensive documentation for this library can be found here:
+http://pynlpl.readthedocs.io/en/latest/folia.html
+
+An example can be found below:
+
+.. code:: python
+
+    from frog import Frog, FrogOptions
+
+    frog = Frog(FrogOptions(parser=True,xmlout=True))
+    output = frog.process("Dit is een FoLiA test.")
+    #output is now no longer a string but an instance of folia.Document, provided by the FoLiA library in PyNLPl (pynlpl.formats.folia)
+    print("FOLIA OUTPUT AS RAW XML=")
+    print(output.xmlstring())
+
+    print("Inspecting FoLiA output (just a small example):")
+    for word in output.words():
+        print(word.text() + " " + word.pos() + " " + word.lemma())
 
 
 
