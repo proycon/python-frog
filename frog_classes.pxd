@@ -37,7 +37,7 @@ cdef extern from "ticcutils/LogStream.h" namespace "TiCC":
         LogStream()
         LogStream(string prefix)
 
-cdef extern from "frog/Frog.h":
+cdef extern from "frog/Frog-util.h":
     cdef cppclass TimerBlock:
         pass
 

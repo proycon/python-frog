@@ -26,7 +26,7 @@ extensions = [ Extension("frog",
 
 setup(
     name = 'python-frog',
-    version = '0.3.3',
+    version = '0.3.4',
     author_email = "proycon@anaproy.nl",
     description = ("Python binding to FROG, an NLP suite for Dutch doing part-of-speech tagging, lemmatisation, morphological analysis, named-entity recognition, shallow parsing, and dependency parsing."),
     requires = ['frog (>=0.13.6)'],
