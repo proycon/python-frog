@@ -5,18 +5,29 @@ import platform
 import glob
 import os
 
-from os.path import expanduser
-HOMEDIR = expanduser("~")
 
+includedirs = []
+libdirs = []
+if platform.system() == "Darwin":
+    #we are running on Mac OS X with homebrew, stuff is in specific locations:
+    libdirs.append("/usr/local/opt/icu4c/lib")
+    includedirs.append("/usr/local/opt/icu4c/include")
+    libdirs.append("/usr/local/opt/libxml2/lib")
+    includedirs.append("/usr/local/opt/libxml2/include")
 
-includedirs = [HOMEDIR + '/local/include/','/usr/include/', '/usr/include/libxml2','/usr/local/include/' ]
-libdirs = [HOMEDIR + '/local/lib/','/usr/lib','/usr/local/lib']
+#add some common default paths
+includedirs += ['/usr/include/', '/usr/include/libxml2','/usr/local/include/' ]
+libdirs += ['/usr/lib','/usr/local/lib']
 if 'VIRTUAL_ENV' in os.environ:
     includedirs.insert(0,os.environ['VIRTUAL_ENV'] + '/include')
     libdirs.insert(0,os.environ['VIRTUAL_ENV'] + '/lib')
+if 'INCLUDE_DIRS' in os.environ:
+    includedirs = list(os.environ['INCLUDE_DIRS'].split(':')) + includedirs
+if 'LIBRARY_DIRS' in os.environ:
+    libdirs = list(os.environ['LIBRARY_DIRS'].split(':')) + libdirs
 
 if platform.system() == "Darwin":
-    extra_options = ["-stdlib=libc++"]
+    extra_options = ["--stdlib=libc++"]
 else:
     extra_options = []
 
@@ -32,7 +43,7 @@ extensions = [ Extension("frog",
 
 setup(
     name = 'python-frog',
-    version = '0.3.5',
+    version = '0.3.6',
     author_email = "proycon@anaproy.nl",
     description = ("Python binding to FROG, an NLP suite for Dutch doing part-of-speech tagging, lemmatisation, morphological analysis, named-entity recognition, shallow parsing, and dependency parsing."),
     requires = ['frog (>=0.13.6)'],
