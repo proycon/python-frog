@@ -27,9 +27,9 @@ if 'LIBRARY_DIRS' in os.environ:
     libdirs = list(os.environ['LIBRARY_DIRS'].split(':')) + libdirs
 
 if platform.system() == "Darwin":
-    extra_options = ["--stdlib=libc++"]
+    extra_options = ["--stdlib=libc++",'-D U_USING_ICU_NAMESPACE=1']
 else:
-    extra_options = []
+    extra_options = ['-D U_USING_ICU_NAMESPACE=1']
 
 extensions = [ Extension("frog",
                 [ "libfolia_classes.pxd", "frog_classes.pxd", "frog_wrapper.pyx"],
@@ -43,7 +43,7 @@ extensions = [ Extension("frog",
 
 setup(
     name = 'python-frog',
-    version = '0.3.6',
+    version = '0.3.7',
     author = "Maarten van Gompel",
     author_email = "proycon@anaproy.nl",
     description = ("Python binding to FROG, an NLP suite for Dutch doing part-of-speech tagging, lemmatisation, morphological analysis, named-entity recognition, shallow parsing, and dependency parsing."),
