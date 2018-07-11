@@ -45,7 +45,7 @@ cdef class FrogOptions:
         mwu - True/False - Do Multi Word Unit detection? (default: True)
         chunking - True/False - Do Chunking/Shallow parsing? (default: True)
         ner - True/False - Do Named Entity Recognition? (default: True)
-        parser - True/False - Do Dependency Parsing? (default: False). The Parser won't work in this binding!
+        parser - True/False - Do Dependency Parsing? (default: False)
         xmlin - True/False - Input is FoLiA XML (default: False)
         xmlout - True/False - Output is FoLiA XML (default: False)
         docid - str - Document ID (for FoLiA)
@@ -55,7 +55,7 @@ cdef class FrogOptions:
     cdef frog_classes.FrogOptions capi
 
     def __init__(self, **kwargs):
-        self['parser'] = False #Parser doesn't work in this binding (segfaults), disable by default
+        self['parser'] = False
         for key, value in kwargs.items():
             self[key] = value
 
