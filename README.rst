@@ -1,6 +1,9 @@
 .. image:: http://applejack.science.ru.nl/lamabadge.php/python-frog
    :target: http://applejack.science.ru.nl/languagemachines/
 
+.. image:: https://zenodo.org/badge/23770267.svg
+   :target: https://zenodo.org/badge/latestdoi/23770267
+
 Frog for Python
 ===================
 
