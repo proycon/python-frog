@@ -84,7 +84,7 @@ cdef extern from "frog/FrogAPI.h":
     cdef cppclass FrogAPI:
         UctoTokenizer * tokenizer
 
-        FrogAPI(FrogOptions options, Configuration configuration, LogStream * logstream)
+        FrogAPI(FrogOptions options, Configuration configuration, LogStream * logstream, LogStream * debuglogstream)
 
         string Frogtostring(string s)
 

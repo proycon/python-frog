@@ -21,12 +21,16 @@ cimport libfolia_classes
 cimport frog_classes
 
 try:
-    from pynlpl.formats.folia import Document as PynlplFoliaDocument
-    HASPYNLPL = True
-except ImportError:
-    HASPYNLPL = False
-    class PynlplFoliaDocument:
-        pass
+    from foliapy.main import Document as FoliaPyDocument
+    HASFOLIAPY = True
+except:
+    try:
+        from pynlpl.formats.folia import Document as FoliaPyDocument
+        HASFOLIAPY = True
+    except ImportError:
+        HASFOLIAPY = False
+        class FoLiAPyDocument: #dummy
+            pass
 
 
 
@@ -131,6 +135,7 @@ cdef class Frog:
     cdef FrogOptions options
     cdef frog_classes.Configuration configuration
     cdef frog_classes.LogStream logstream
+    cdef frog_classes.LogStream debuglogstream
 
     def __init__(self, FrogOptions options, configurationfile = ""):
         """Initialises Frog, pass a FrogOptions instance and a configuration file"""
@@ -143,7 +148,7 @@ cdef class Frog:
             self.configuration.fill(self.capi.defaultConfigFile("nld"))
 
 
-        self.capi = new frog_classes.FrogAPI(options.capi, self.configuration, &self.logstream)
+        self.capi = new frog_classes.FrogAPI(options.capi, self.configuration, &self.logstream, &self.debuglogstream)
 
 
     def process_raw(self, text):
@@ -175,16 +180,16 @@ cdef class Frog:
 
     def process(self, text):
         """Invokes Frog on the specified text. The text may be a string, or a folia.Document instance if Frog was instantiated with xmlin=True. If xmlout=False (default), the results from Frog are parsed into a list of dictionaries, one per token; if True, a FoLiA Document instance is returned"""
-        if self.options['xmlin'] and HASPYNLPL and isinstance(text, PynlplFoliaDocument):
+        if self.options['xmlin'] and HASFOLIAPY and isinstance(text, FoliaPyDocument):
             text = str(text)
         elif not isinstance(text,str) and not (sys.version < '3' and isinstance(text,unicode)):
             raise ValueError("Text should be a string or FoLiA Document instance")
 
-        if self.options['xmlout'] and HASPYNLPL:
-            if HASPYNLPL:
-                return PynlplFoliaDocument(string=self.process_raw(text))
+        if self.options['xmlout'] and HASFOLIAPY:
+            if HASFOLIAPY:
+                return FoliaPyDocument(string=self.process_raw(text))
             else:
-                raise Exception("Unable to return a FoLiA Document. Pynlpl was not installed. Use process_raw() instead if you just want the XML output as string")
+                raise Exception("Unable to return a FoLiA Document. FoLiAPy was not installed. Use process_raw() instead if you just want the XML output as string")
         else:
             return self.parsecolumns(self.process_raw(text))
 
