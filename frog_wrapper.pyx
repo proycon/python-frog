@@ -21,7 +21,7 @@ cimport libfolia_classes
 cimport frog_classes
 
 try:
-    from foliapy.main import Document as FoliaPyDocument
+    from folia.main import Document as FoliaPyDocument
     HASFOLIAPY = True
 except:
     try:

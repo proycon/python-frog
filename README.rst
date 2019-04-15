@@ -19,12 +19,12 @@ Installation
 Easy
 ~~~~~~~~~~
 
-For easy installation, please use our LaMachine distribution (https://proycon.github.io/LaMachine).
+For easy installation, please use our `LaMachine distribution <https://proycon.github.io/LaMachine>`_
 
 Manual
 ~~~~~~~~~~~~
 
-* Make sure to first install Frog itself (https://languagemachines.github.io/frog) and all its dependencies
+* Make sure to first install `Frog <https://languagemachines.github.io/frog>`_ and all its dependencies
 * Install Cython if not yet available on your system: ``$ sudo apt-get cython cython3`` (Debian/Ubuntu, may differ for others)
 * Run:  ``$ sudo python setup.py install``
 
@@ -96,9 +96,9 @@ well as FoLiA input (set ``FrogOptions(xmlin=True)``). The FoLiA format exposes 
 annotation in a more structured and more formal way.
 
 Whenever FoLiA output is requested, the ``process()`` method will return an instance of ``folia.Document``, which is
-provided by the PyNLPL library (``pynlpl.formats.folia`` module).  This loads the entire FoLiA document in memory and
+provided by the `FoLiApy library <https://github.com/proycon/foliapy>`_. This loads the entire FoLiA document in memory and
 allows you to inspect it in any way you see fit. Extensive documentation for this library can be found here:
-http://pynlpl.readthedocs.io/en/latest/folia.html
+http://folia.readthedocs.io/
 
 An example can be found below:
 
