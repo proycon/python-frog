@@ -43,7 +43,7 @@ extensions = [ Extension("frog",
 
 setup(
     name = 'python-frog',
-    version = '0.3.7',
+    version = '0.4.0',
     author = "Maarten van Gompel",
     author_email = "proycon@anaproy.nl",
     description = ("Python binding to FROG, an NLP suite for Dutch doing part-of-speech tagging, lemmatisation, morphological analysis, named-entity recognition, shallow parsing, and dependency parsing."),
@@ -52,7 +52,7 @@ setup(
     url = "https://github.com/proycon/python-frog",
     ext_modules = extensions,
     cmdclass = {'build_ext': build_ext},
-    requires = ['frog (>=0.13.6)'],
+    requires = ['frog (>=0.16)'],
     install_requires=['Cython'],
     classifiers=[
         "Development Status :: 4 - Beta",
