@@ -152,7 +152,7 @@ cdef class Frog:
 
 
     def process_raw(self, text):
-        """Invokes Frog on the specified text, the text is considered one document. The raw results from Frog are return as a string"""
+        """Invokes Frog on the specified text, the text is considered one document. The raw results from Frog are returned as a string"""
         #cdef libfolia_classes.Document * doc = self.capi.tokenizer.tokenizehelper( text.encode('utf-8') )
         cdef string result = self.capi.Frogtostring(self._encode_text(text))
         r = result.decode('utf-8') #if (sys.version < '3' and type(text) == unicode) or (sys.version > '3' and type(text) == str) else result
@@ -187,7 +187,12 @@ cdef class Frog:
 
         if self.options['xmlout'] and HASFOLIAPY:
             if HASFOLIAPY:
-                return FoliaPyDocument(string=self.process_raw(text))
+                data = self.process_raw(text)
+                if not data:
+                    raise ValueError("No data returned")
+                elif data[0] != '<':
+                    raise ValueError("Returned data is not XML, got: " + str(data[:25]))
+                return FoliaPyDocument(string=data)
             else:
                 raise Exception("Unable to return a FoLiA Document. FoLiAPy was not installed. Use process_raw() instead if you just want the XML output as string")
         else:
