@@ -14,6 +14,7 @@ if platform.system() == "Darwin":
     includedirs.append("/usr/local/opt/icu4c/include")
     libdirs.append("/usr/local/opt/libxml2/lib")
     includedirs.append("/usr/local/opt/libxml2/include")
+    includedirs.append("/usr/local/opt/libxml2/include/libxml2")
 
 #add some common default paths
 includedirs += ['/usr/include/', '/usr/include/libxml2','/usr/local/include/' ]
@@ -43,7 +44,7 @@ extensions = [ Extension("frog",
 
 setup(
     name = 'python-frog',
-    version = '0.4.0',
+    version = '0.4.1',
     author = "Maarten van Gompel",
     author_email = "proycon@anaproy.nl",
     description = ("Python binding to FROG, an NLP suite for Dutch doing part-of-speech tagging, lemmatisation, morphological analysis, named-entity recognition, shallow parsing, and dependency parsing."),

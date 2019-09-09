@@ -11,7 +11,7 @@ print("PARSED OUTPUT=",output)
 
 frog = Frog(FrogOptions(parser=True,xmlout=True))
 output = frog.process("Dit is een FoLiA test.")
-#output is now no longer a string but an instance of folia.Document, provided by the FoLiA library in PyNLPl (pynlpl.formats.folia)
+#output is now no longer a string but an instance of folia.Document, provided by the FoLiA library in FoLiaPy
 print("FOLIA OUTPUT=")
 print(output.xmlstring())
 
