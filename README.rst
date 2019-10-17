@@ -4,6 +4,10 @@
 .. image:: https://zenodo.org/badge/23770267.svg
    :target: https://zenodo.org/badge/latestdoi/23770267
 
+.. image:: https://www.repostatus.org/badges/latest/active.svg
+   :alt: Project Status: Active – The project has reached a stable, usable state and is being actively developed.
+   :target: https://www.repostatus.org/#active
+
 Frog for Python
 ===================
 
