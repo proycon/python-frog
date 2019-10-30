@@ -198,10 +198,6 @@ cdef class Frog:
         else:
             return self.parsecolumns(self.process_raw(text))
 
-
-    def __del__(self):
-        del self.capi
-
     def _encode_text(self, text):
         if sys.version < '3' and type(text) == unicode:
             return text.encode('utf-8')
