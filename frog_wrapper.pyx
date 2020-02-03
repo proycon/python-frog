@@ -160,7 +160,10 @@ cdef class Frog:
 
     def parsecolumns(self, response):
         """Parse the raw Frog response"""
-        columns = ('index','text','lemma','morph','pos','posprob','ner','chunker','depindex','dep')
+        if self.capi.doDeepMorph:
+            columns = ('index','text','lemma','morph','compound','pos','posprob','ner','chunker','depindex','dep')
+        else:
+            columns = ('index','text','lemma','morph','pos','posprob','ner','chunker','depindex','dep')
         data = []
         for line in response.split('\n'):
             if not line.strip():
