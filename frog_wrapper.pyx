@@ -160,7 +160,7 @@ cdef class Frog:
 
     def parsecolumns(self, response):
         """Parse the raw Frog response"""
-        if self.capi.doDeepMorph:
+        if self.options['doDeepMorph']:
             columns = ('index','text','lemma','morph','compound','pos','posprob','ner','chunker','depindex','dep')
         else:
             columns = ('index','text','lemma','morph','pos','posprob','ner','chunker','depindex','dep')
