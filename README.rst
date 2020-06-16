@@ -92,6 +92,14 @@ Available keyword arguments for FrogOptions:
 * docid - str - Document ID (for FoLiA)
 * numThreads - int - Number of threads to use (default: unset, unlimited)
 
+You can specify a Frog configuration file explicitly as second argument upon instantiation, otherwise the default one is
+used:
+
+.. code:: python
+
+    frog = frog.Frog(frog.FrogOptions(parser=False), "/path/to/your/frog.cfg")
+
+
 FoLiA support
 ------------------
 
