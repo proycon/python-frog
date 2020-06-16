@@ -137,8 +137,8 @@ cdef class Frog:
     cdef frog_classes.LogStream logstream
     cdef frog_classes.LogStream debuglogstream
 
-    def __init__(self, FrogOptions options, configurationfile = ""):
-        """Initialises Frog, pass a FrogOptions instance and a configuration file"""
+    def __init__(self, FrogOptions options, configurationfile = "", overrides = None):
+        """Initialises Frog, pass a FrogOptions instance and a configuration file, and optionally a dictionary containing overrides for the configuration."""
 
         self.options = options
 
@@ -147,6 +147,16 @@ cdef class Frog:
         else:
             self.configuration.fill(self.capi.defaultConfigFile("nld"))
 
+        if overrides:
+            assert(overrides, dict)
+            for key, value in overrides.item():
+                key_fields = value.split('.')
+                if len(key_fields) == 2:
+                    self.configuration.setatt(key_fields[1], value, key_fields[0])
+                elif len(key_fields) == 1:
+                    self.configuration.setatt(key_fields[0], value)
+                else:
+                    raise Exception("Invalid override: " + str(key))
 
         self.capi = new frog_classes.FrogAPI(options.capi, self.configuration, &self.logstream, &self.debuglogstream)
 

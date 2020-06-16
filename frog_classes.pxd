@@ -31,6 +31,8 @@ cdef extern from "ticcutils/Configuration.h" namespace "TiCC":
         bool fill( string filename )
         bool hasSection( string section )
         str configDir()
+        string setatt(string&, string&, string&)
+        string setatt(string&, string&)
 
 cdef extern from "ticcutils/LogStream.h" namespace "TiCC":
     cdef cppclass LogStream:
