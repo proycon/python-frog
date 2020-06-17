@@ -93,13 +93,18 @@ Available keyword arguments for FrogOptions:
 * numThreads - int - Number of threads to use (default: unset, unlimited)
 
 You can specify a Frog configuration file explicitly as second argument upon instantiation, otherwise the default one is
-used. A third parameter, a dictionary, can be used to override specific configuration values (same syntax as Frog's
-``--override`` option):
+used:
 
 .. code:: python
 
-    frog = frog.Frog(frog.FrogOptions(parser=False), "/path/to/your/frog.cfg", { "tokenizer.rulesFile": "tokconfig-nld-twitter" })
+    frog = frog.Frog(frog.FrogOptions(parser=False), "/path/to/your/frog.cfg")
 
+A third parameter, a dictionary, can be used to override specific configuration values (same syntax as Frog's
+``--override`` option), you may want to leave the second parameter empty if you want to load the default configuration:
+
+.. code:: python
+
+    frog = frog.Frog(frog.FrogOptions(parser=False), "", { "tokenizer.rulesFile": "tokconfig-nld-twitter" })
 
 FoLiA support
 ------------------
