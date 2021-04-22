@@ -39,6 +39,14 @@ cdef extern from "ticcutils/LogStream.h" namespace "TiCC":
         LogStream()
         LogStream(string prefix)
 
+cdef extern from "ticcutils/CommandLine.h" namespace "TiCC":
+    cdef cppclass CL_Options:
+        CL_Options()
+        void insert(string&, string&)
+        void insert(char, string&, bool)
+        bool is_present(string&)
+        bool is_present(char)
+
 cdef extern from "frog/Frog-util.h":
     cdef cppclass TimerBlock:
         pass
@@ -48,45 +56,11 @@ cdef extern from "frog/ucto_tokenizer_mod.h":
         Document * tokenizehelper( string)
 
 cdef extern from "frog/FrogAPI.h":
-    cdef cppclass FrogOptions:
-        bool doTok
-        bool doLemma
-        bool doMorph
-        bool doDeepMorph
-        bool doMwu
-        bool doIOB
-        bool doNER
-        bool doParse
-        bool doSentencePerLine
-        bool doQuoteDetection
-        bool doDirTest
-        bool doServer
-
-        bool doXMLin
-        bool doXMLout
-        bool doKanon
-
-        int debugFlag
-        int numThreads
-
-
-        bool interactive
-
-        string encoding
-        string uttmark
-        string listenport
-        string docid
-        string textclass
-
-        string tmpDirName
-
-        int maxParserTokens
-
 
     cdef cppclass FrogAPI:
         UctoTokenizer * tokenizer
 
-        FrogAPI(FrogOptions options, Configuration configuration, LogStream * logstream, LogStream * debuglogstream)
+        FrogAPI(CL_Options& options, LogStream * logstream, LogStream * debuglogstream)
 
         string Frogtostring(string s)
 

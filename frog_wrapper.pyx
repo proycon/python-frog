@@ -42,91 +42,96 @@ cdef class Document:
 cdef class FrogOptions:
     """Options for Frog, passed as keyword arguments to the constructor. Also accessible like dictionary keys.
 
-        tok - True/False - Do tokenisation? (default: True)
-        lemma - True/False - Do lemmatisation? (default: True)
-        morph - True/False - Do morpholigical analysis? (default: True)
-        deepmorph - True/False - Do morphological analysis in new experimental style? (default: False)
-        mwu - True/False - Do Multi Word Unit detection? (default: True)
-        chunking - True/False - Do Chunking/Shallow parsing? (default: True)
-        ner - True/False - Do Named Entity Recognition? (default: True)
-        parser - True/False - Do Dependency Parsing? (default: False)
-        xmlin - True/False - Input is FoLiA XML (default: False)
-        xmlout - True/False - Output is FoLiA XML (default: False)
-        docid - str - Document ID (for FoLiA)
-        numThreads - int - Number of threads to use (default: unset, unlimited)
+    You can pass as keyword arguments to the constructor any options similar to the command-line paramters accepted by Frog.
+    Please see frog --help for a complete list.
+
+        * ``skip`` ``[values]`` - Skip Tokenizer (t), Lemmatizer (l), Morphological Analyzer (a), Chunker (c), Multi-Word Units (m), Named Entity Recognition (n), or Parser (p)
+        * ``id`` ``[string]`` - Document ID for FoLiA output
+
+    Boolean parameters are passed like ``n=True``
+
+    Old style-options: These are deprecated but supported for backward compatibility reasons:
+
+        * ``tok`` - True/False - Do tokenisation? (default: True)
+        * ``lemma`` - True/False - Do lemmatisation? (default: True)
+        * ``morph`` - True/False - Do morpholigical analysis? (default: True)
+        * ``deepmorph`` - True/False - Do morphological analysis in new experimental style? (default: False)
+        * ``mwu`` - True/False - Do Multi Word Unit detection? (default: True)
+        * ``chunking`` - True/False - Do Chunking/Shallow parsing? (default: True)
+        * ``ner`` - True/False - Do Named Entity Recognition? (default: True)
+        * ``parser`` - True/False - Do Dependency Parsing? (default: False)
+        * ``xmlin`` - True/False - Input is FoLiA XML (default: False)
+        * ``xmlout`` - True/False - Output is FoLiA XML (default: False)
+        * ``docid`` - str - Document ID (for FoLiA)
+        * ``numThreads`` - int - Number of threads to use (default: unset, unlimited)
 
     """
-    cdef frog_classes.FrogOptions capi
+    cdef frog_classes.CL_Options capi
+    cdef dict shadow
+    cdef list skip
 
     def __init__(self, **kwargs):
-        self['parser'] = False
+        self.shadow = {} #shadow all settings in a dictionary
+        self.skip = ["p"] #skip parser by default
         for key, value in kwargs.items():
             self[key] = value
 
     def __getitem__(self, key):
-        key = key.lower()
-        if key in ('dotok','tok'):
-            return self.capi.doTok
-        elif key in ('dolemma','lemma'):
-            return self.capi.doLemma
-        elif key in ('domorph','morph'):
-            return self.capi.doMorph
-        elif key in ('dodaringmorph','daringmorph','deepmorph','dodeepmorph'):
-            return self.capi.doDeepMorph
-        elif key in ('domwu','mwu'):
-            return self.capi.doMwu
-        elif key in ('doiob','iob','dochunking','chunking','shallowparsing'):
-            return self.capi.doIOB
-        elif key in ('doner','ner'):
-            return self.capi.doNER
-        elif key in ('doparse','doparser','parse','parser'):
-            return self.capi.doParse
-        elif key in ('doxmlin','xmlin','foliain'):
-            return self.capi.doXMLin
-        elif key in ('doxmlout','xmlout','foliaout'):
-            return self.capi.doXMLout
-        elif key in ('docid'):
-            return self.capi.docid
-        elif key in ('numthreads','threads'):
-            return self.capi.numThreads
-        elif key in ('debug','debugflag'):
-            return self.capi.debugFlag
+        key = key.replace("_","-").lower()
+        if key in self.shadow:
+            return self.shadow[key]
         else:
             raise KeyError("No such key: " + str(key))
 
-
+    def get(self, key, default=False):
+        key = key.replace("_","-").lower()
+        if key in self.shadow:
+            return self.shadow[key]
+        else:
+            return default
 
     def __setitem__(self, key, value):
-        key = key.lower()
-        if key in ('dotok','tok'):
-            self.capi.doTok = <bool>value
-        elif key in ('dolemma','lemma'):
-            self.capi.doLemma = <bool>value
-        elif key in ('domorph','morph'):
-            self.capi.doMorph = <bool>value
-        elif key in ('dodaringmorph','daringmorph','deepmorph','dodeepmorph'):
-            self.capi.doDeepMorph = <bool>value
-        elif key in ('domwu','mwu'):
-            self.capi.doMwu = <bool>value
-        elif key in ('doiob','iob','dochunking','chunking','shallowparsing'):
-            self.capi.doIOB = <bool>value
-        elif key in ('doner','ner'):
-            self.capi.doNER = <bool>value
-        elif key in ('doparse','doparser','parse','parser'):
-            self.capi.doParse = <bool>value
-        elif key in ('doxmlin','xmlin','foliain'):
-            self.capi.doXMLin = <bool>value
-        elif key in ('doxmlout','xmlout','foliaout'):
-            self.capi.doXMLout = <bool>value
-        elif key in ('debug','debugflag'):
-            self.capi.debugFlag = <bool>value
-        elif key in ('docid'):
-            self.capi.docid = <string>value
-        elif key in ('numthreads','threads'):
-            self.capi.numThreads = <int>value
+        key = key.replace("_","-")
+        self.shadow[key.lower()] = value
+        if key.lower() in ('dotok','tok'):
+            if not value: self.skip.append("t")
+        elif key.lower() in ('dolemma','lemma'):
+            if not value: self.skip.append("l")
+        elif key.lower() in ('domorph','morph'):
+            if not value: self.skip.append("a")
+        elif key.lower() in ('dodaringmorph','daringmorph','deepmorph','dodeepmorph'):
+            self.capi.insert(<string>"deepmorph",<string>"")
+        elif key.lower() in ('domwu','mwu'):
+            if not value: self.skip.append("m")
+        elif key.lower() in ('doiob','iob','dochunking','chunking','shallowparsing'):
+            if not value: self.skip.append("c")
+        elif key.lower() in ('doner','ner'):
+            if not value: self.skip.append("n")
+        elif key.lower() in ('doparse','doparser','parse','parser'):
+            if not value:
+                self.skip.append("p")
+            elif value:
+                self.skip.remove("p")
+        elif key.lower() in ('doxmlin','xmlin','foliain'):
+            self.capi.insert(<char>"x", <string>"", False)
+        elif key.lower() in ('doxmlout','xmlout','foliaout'):
+            self.capi.insert(<char>"X", <string>"", False)
+        elif key.lower() in ('debug','debugflag'):
+            if value: self.capi.insert(<char>"d", <string>"1", False)
+        elif key.lower() in ('docid','id'):
+            self.capi.insert(<string>"id", <string>value)
+        elif key.lower() in ('numthreads','threads'):
+            self.capi.insert(<string>"threads",<string>value)
         else:
-            raise KeyError("No such key: " + str(key))
+            if key == 'x':
+                self.shadow['xmlin'] = True
+            elif key == 'X':
+                self.shadow['xmlout'] = True
+            self.capi.insert(<string>key, <string>value)
 
+    def finish(self):
+        v = "".join(self.skip)
+        self.capi.insert(<string>"skip", <string>v.encode('utf-8'))
 
 
 
@@ -140,6 +145,12 @@ cdef class Frog:
     def __init__(self, FrogOptions options, configurationfile = "", overrides = None):
         """Initialises Frog, pass a FrogOptions instance and a configuration file, and optionally a dictionary containing overrides for the configuration."""
 
+        options.finish()
+        if overrides:
+            assert(overrides, dict)
+            for key, value in overrides.item():
+                v = key + "=" + value
+                options.capi.insert(<string>"override", <string>v)
         self.options = options
 
         if configurationfile:
@@ -147,18 +158,7 @@ cdef class Frog:
         else:
             self.configuration.fill(self.capi.defaultConfigFile("nld"))
 
-        if overrides:
-            assert(overrides, dict)
-            for key, value in overrides.item():
-                key_fields = value.split('.')
-                if len(key_fields) == 2:
-                    self.configuration.setatt(key_fields[1], value, key_fields[0])
-                elif len(key_fields) == 1:
-                    self.configuration.setatt(key_fields[0], value)
-                else:
-                    raise Exception("Invalid override: " + str(key))
-
-        self.capi = new frog_classes.FrogAPI(options.capi, self.configuration, &self.logstream, &self.debuglogstream)
+        self.capi = new frog_classes.FrogAPI(options.capi, &self.logstream, &self.debuglogstream)
 
 
     def process_raw(self, text):
@@ -170,7 +170,7 @@ cdef class Frog:
 
     def parsecolumns(self, response):
         """Parse the raw Frog response"""
-        if self.options['doDeepMorph']:
+        if self.options.get('doDeepMorph'):
             columns = ('index','text','lemma','morph','compound','pos','posprob','ner','chunker','depindex','dep')
         else:
             columns = ('index','text','lemma','morph','pos','posprob','ner','chunker','depindex','dep')
@@ -193,12 +193,12 @@ cdef class Frog:
 
     def process(self, text):
         """Invokes Frog on the specified text. The text may be a string, or a folia.Document instance if Frog was instantiated with xmlin=True. If xmlout=False (default), the results from Frog are parsed into a list of dictionaries, one per token; if True, a FoLiA Document instance is returned"""
-        if self.options['xmlin'] and HASFOLIAPY and isinstance(text, FoliaPyDocument):
+        if self.options.get('xmlin') and HASFOLIAPY and isinstance(text, FoliaPyDocument):
             text = str(text)
         elif not isinstance(text,str) and not (sys.version < '3' and isinstance(text,unicode)):
             raise ValueError("Text should be a string or FoLiA Document instance")
 
-        if self.options['xmlout'] and HASFOLIAPY:
+        if self.options.get('xmlout') and HASFOLIAPY:
             if HASFOLIAPY:
                 data = self.process_raw(text)
                 if not data:
@@ -212,9 +212,7 @@ cdef class Frog:
             return self.parsecolumns(self.process_raw(text))
 
     def _encode_text(self, text):
-        if sys.version < '3' and type(text) == unicode:
-            return text.encode('utf-8')
-        if sys.version > '3' and type(text) == str:
+        if type(text) == str:
             return text.encode('utf-8')
         return text #already was bytes or python2 str
 
