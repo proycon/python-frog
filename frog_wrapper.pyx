@@ -73,6 +73,7 @@ cdef class FrogOptions:
     def __init__(self, **kwargs):
         self.shadow = {} #shadow all settings in a dictionary
         self.skip = ["p"] #skip parser by default
+        self.capi.insert(<string>"nostdout",<string>"")
         for key, value in kwargs.items():
             self[key] = value
 
