@@ -149,7 +149,7 @@ jobs:
       - name: build and install python frog
         env:
           CXX:  ${{ matrix.compiler }}
-        run: sudo pip3 install .
+        run: sudo pip3 install --prefix /usr/local/ .
       - name: check
         env:
           CXX:  ${{ matrix.compiler }}
