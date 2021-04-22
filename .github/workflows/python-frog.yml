@@ -143,9 +143,6 @@ jobs:
           sudo make install;
           cd ..;
 
-      - name: Symlink includes
-        run: sudo ln -s /usr/local/include/frog /usr/include/frog
-
       - name: build and install python frog
         env:
           CXX:  ${{ matrix.compiler }}
