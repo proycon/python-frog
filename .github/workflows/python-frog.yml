@@ -1,9 +1,6 @@
 name: C/C++/Cython/Python CI
 
 on:
-  schedule:
-    - cron: "0 23 * * 6"
-
   push:
     branches: [master]
     paths:
@@ -146,6 +143,9 @@ jobs:
           sudo make install;
           cd ..;
 
+      - name: Symlink includes
+        run: sudo ln -s /usr/local/include/frog /usr/include/frog
+
       - name: build and install python frog
         env:
           CXX:  ${{ matrix.compiler }}
@@ -164,7 +164,7 @@ jobs:
           channel: '#gitlama'
           nickname: GitHub
           message: |-
-            Building Frog with ${{ matrix.compiler }} by ${{ github.actor }} on ${{ matrix.os }}: FAILED
+            Building python-frog with ${{ matrix.compiler }} by ${{ github.actor }} on ${{ matrix.os }}: FAILED
 
       - name: Notify IRC of succes
         if: ${{ success() }}
@@ -174,4 +174,4 @@ jobs:
           channel: '#gitlama'
           nickname: GitHub
           message: |-
-            Building Frog with ${{ matrix.compiler }} by ${{ github.actor }} on ${{ matrix.os }}: SUCCESS
+            Building python-frog with ${{ matrix.compiler }} by ${{ github.actor }} on ${{ matrix.os }}: SUCCESS
