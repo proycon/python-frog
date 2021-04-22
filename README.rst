@@ -15,7 +15,7 @@ This is a Python binding to the Natural Language Processing suite Frog. Frog is
 intended for Dutch and performs part-of-speech tagging, lemmatisation,
 morphological analysis, named entity recognition, shallow parsing, and
 dependency parsing. The tool itseelf is implemented in C++
-(http://ilk.uvt.nl/frog).
+(http://ilk.uvt.nl/frog). The binding requires Python 3.
 
 Installation
 ----------------
@@ -29,8 +29,8 @@ Manual
 ~~~~~~~~~~~~
 
 * Make sure to first install `Frog <https://languagemachines.github.io/frog>`_ and all its dependencies
-* Install Cython if not yet available on your system: ``$ sudo apt-get cython cython3`` (Debian/Ubuntu, may differ for others)
-* Run:  ``$ sudo python setup.py install``
+* Install Cython if not yet available on your system: ``$ sudo apt-get cython3`` (Debian/Ubuntu, may differ for others)
+* Run:  ``$ sudo python3 setup.py install``
 
 Usage
 ------------------
@@ -38,8 +38,6 @@ Usage
 Example:
 
 .. code:: python
-
-    from __future__ import print_function, unicode_literals #to make this work on Python 2 as well as Python 3
 
     import frog
 
