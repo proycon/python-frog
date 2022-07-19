@@ -15,10 +15,12 @@ from cython.operator cimport dereference as deref, preincrement as inc
 from cython import address
 from libc.stdint cimport *
 from libcpp.utility cimport pair
-import os.path
+import os
 import sys
 cimport libfolia_classes
 cimport frog_classes
+
+FROGDATAVERSION = "0.20"
 
 try:
     from folia.main import Document as FoliaPyDocument
@@ -154,9 +156,18 @@ cdef class Frog:
         self.options = options
 
         if configurationfile:
+            if not os.path.exists(configurationfile):
+                #better let Python handle  this rather than the binding, so the interpreter can recover:
+                raise FileNotFoundError(f"Specified configuration file {configurationfile} does not exist!")
             self.configuration.fill(configurationfile.encode('utf-8'))
         else:
-            self.configuration.fill(self.capi.defaultConfigFile("nld"))
+            configurationfile = self.capi.defaultConfigFile("nld")
+            if not os.path.exists(configurationfile):
+                configurationfile = os.path.join(localpath(), "nld", "frog.cfg")
+                if not os.path.exists(configurationfile):
+                    #better let Python handle  this rather than the binding, so the interpreter can recover:
+                    raise FileNotFoundError(f"Default configuration file {configurationfile} does not exist! Try running frog.installdata() first")
+            self.configuration.fill(configurationfile)
 
         self.capi = new frog_classes.FrogAPI(options.capi, &self.logstream, &self.debuglogstream)
 
@@ -216,3 +227,18 @@ cdef class Frog:
             return text.encode('utf-8')
         return text #already was bytes or python2 str
 
+def localpath():
+    xdg_config_dir = os.environ.get("XDG_CONFIG_DIR", os.path.join(os.environ.get("HOME",""), ".config"))
+    return os.environ.get("FROGDATAPATH", os.path.join(xdg_config_dir,"frog") )
+
+def installdata(targetdir=None, version=FROGDATAVERSION):
+    if targetdir is None:
+        targetdir = localpath()
+    tmpdir=os.environ.get("TMPDIR","/tmp")
+    if os.system(f"cd {tmpdir} && mkdir -p {targetdir} && wget -O frogdata.tar.gz https://github.com/LanguageMachines/frogdata/releases/download/v{version}/frogdata-{version}.tar.gz && tar -xzf frogdata.tar.gz && cd frogdata-{version} && mv config/* {targetdir}/ && cd .. && rm -Rf frogdata-{version} && rm -Rf frogdata.tar.gz") != 0:
+        raise Exception("Installation failed")
+
+
+
+
+    

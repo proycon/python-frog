@@ -14,23 +14,48 @@ Frog for Python
 This is a Python binding to the Natural Language Processing suite Frog. Frog is
 intended for Dutch and performs part-of-speech tagging, lemmatisation,
 morphological analysis, named entity recognition, shallow parsing, and
-dependency parsing. The tool itseelf is implemented in C++
-(http://ilk.uvt.nl/frog). The binding requires Python 3.
+dependency parsing. The tool itself is implemented in C++
+(https://languagemachines.github.io/frog). The binding requires Python 3.6 or higher.
 
 Installation
 ----------------
 
-Easy
+Linux
 ~~~~~~~~~~
 
-For easy installation, please use our `LaMachine distribution <https://proycon.github.io/LaMachine>`_
+On modern Linux distributions, we recommend you use a Python virtual environment and install using ``pip``::
 
-Manual
-~~~~~~~~~~~~
+    pip install python-frog
 
-* Make sure to first install `Frog <https://languagemachines.github.io/frog>`_ and all its dependencies
-* Install Cython if not yet available on your system: ``$ sudo apt-get cython3`` (Debian/Ubuntu, may differ for others)
-* Run:  ``$ sudo python3 setup.py install``
+When possible on your system (glibc >= 2.28, x86_64), this will install the binary
+Python wheels *that include Frog and all necessary dependencies* **except for**
+frogdata. To download and install the data (in ``~/.config/frog``) you then only need to
+run the following once::
+
+    python -c "import frog; frog.installdata()"
+
+If the binary wheels are not available for your distribution, you will need to first install Frog yourself.
+
+Alpine Linux
+~~~~~~~~~~~~~~
+
+First install Cython and Frog (``apk add cython frog frog-dev``), then ``pip install python-frog`` (preferably in a Python virtual environment)
+
+macOS
+~~~~~~~~
+
+First use homebrew to install `Frog <https://languagemachines.github.io/frog>`_::
+
+    brew install frog
+
+Then install this binding using ``pip`` (preferably in a Python virtual environment)::
+
+    pip install python-frog
+
+Windows
+~~~~~~~~~~
+
+Not supported natively, but you should be able to use the Frog python binding if you use WSL.
 
 Usage
 ------------------

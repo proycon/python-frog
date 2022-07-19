@@ -2,7 +2,6 @@
 from distutils.core import setup, Extension
 from Cython.Distutils import build_ext
 import platform
-import glob
 import os
 
 
@@ -44,7 +43,7 @@ extensions = [ Extension("frog",
 
 setup(
     name = 'python-frog',
-    version = '0.5.0',
+    version = '0.5.1',
     author = "Maarten van Gompel",
     author_email = "proycon@anaproy.nl",
     description = ("Python binding to FROG, an NLP suite for Dutch doing part-of-speech tagging, lemmatisation, morphological analysis, named-entity recognition, shallow parsing, and dependency parsing."),
@@ -53,13 +52,12 @@ setup(
     url = "https://github.com/proycon/python-frog",
     ext_modules = extensions,
     cmdclass = {'build_ext': build_ext},
-    requires = ['frog (>=0.16)'],
+    requires = ['frog (>=0.24)'],
     install_requires=['Cython'],
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Topic :: Text Processing :: Linguistic",
         "Programming Language :: Cython",
-        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
         "Operating System :: POSIX",
         "Intended Audience :: Developers",
