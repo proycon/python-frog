@@ -34,6 +34,10 @@ run the following once::
 
     python -c "import frog; frog.installdata()"
 
+If you want language detection support, ensure you the have `libexttextcat`
+package (if provided by your distribution) installed prior to executing the
+above command.
+
 If the binary wheels are not available for your distribution, you will need to first install Frog yourself.
 
 Alpine Linux

@@ -103,7 +103,7 @@ cdef class FrogOptions:
         elif key.lower() in ('domorph','morph'):
             if not value: self.skip.append("a")
         elif key.lower() in ('dodaringmorph','daringmorph','deepmorph','dodeepmorph'):
-            self.capi.insert(<string>"deepmorph",<string>"")
+            self.capi.insert(<string>b"deepmorph",<string>b"")
         elif key.lower() in ('domwu','mwu'):
             if not value: self.skip.append("m")
         elif key.lower() in ('doiob','iob','dochunking','chunking','shallowparsing'):
@@ -116,15 +116,15 @@ cdef class FrogOptions:
             elif value:
                 self.skip.remove("p")
         elif key.lower() in ('doxmlin','xmlin','foliain'):
-            self.capi.insert(<char>"x", <string>"", False)
+            self.capi.insert(<char>b"x", <string>b"", False)
         elif key.lower() in ('doxmlout','xmlout','foliaout'):
-            self.capi.insert(<char>"X", <string>"", False)
+            self.capi.insert(<char>b"X", <string>b"", False)
         elif key.lower() in ('debug','debugflag'):
-            if value: self.capi.insert(<char>"d", <string>"1", False)
+            if value: self.capi.insert(<char>b"d", <string>b"1", False)
         elif key.lower() in ('docid','id'):
-            self.capi.insert(<string>"id", <string>value)
+            self.capi.insert(<string>b"id", <string>value)
         elif key.lower() in ('numthreads','threads'):
-            self.capi.insert(<string>"threads",<string>value)
+            self.capi.insert(<string>b"threads",<string>value)
         else:
             if key == 'x':
                 self.shadow['xmlin'] = True
@@ -134,7 +134,7 @@ cdef class FrogOptions:
 
     def finish(self):
         v = "".join(self.skip)
-        self.capi.insert(<string>"skip", <string>v.encode('utf-8'))
+        self.capi.insert(<string>b"skip", <string>v.encode('utf-8'))
 
 
 
@@ -152,16 +152,16 @@ cdef class Frog:
             assert(overrides, dict)
             for key, value in overrides.item():
                 v = key + "=" + value
-                options.capi.insert(<string>"override", <string>v)
+                options.capi.insert(<string>b"override", <string>v.encode('utf-8'))
 
         if configurationfile:
             if configurationfile.startswith("/") and not os.path.exists(configurationfile):
                 #better let Python handle  this rather than the binding, so the interpreter can recover
                 #When the configurationfile is not absolute thouugh, we let frog handle it (will search in the default config dirs but may come back with a hard failure!)
                 raise FileNotFoundError(f"Specified configuration file {configurationfile} does not exist!")
-            options.capi.insert(<string>"config", <string>configurationfile.encode("utf-8"))
+            options.capi.insert(<string>b"config", <string>configurationfile.encode("utf-8"))
         else:
-            configurationfile = self.capi.defaultConfigFile("nld")
+            configurationfile = self.capi.defaultConfigFile(b"nld")
             if not os.path.exists(configurationfile):
                 #better let Python handle  this rather than the binding, so the interpreter can recover:
                 raise FileNotFoundError(f"Default configuration file {configurationfile} does not exist! Try running frog.installdata() first")
@@ -255,7 +255,11 @@ def installdata(targetdir=None, frogdataversion=FROGDATAVERSION, uctodataversion
             raise Exception("Installation of frogdata failed")
         print(f"Installation of frogdata {frogdataversion} complete", file=sys.stderr)
 
-
+    if os.path.isdir("/usr/share/libexttextcat"):
+        if os.system(f"cd {uctodir} && wget -O textcat.cfg https://raw.githubusercontent.com/LanguageMachines/ucto/master/config/textcat.cfg") != 0:
+            raise Exception("Installation of textcat.cfg failed.")
+    else:
+        print("Language detection will not be available unless you install libexttextcat and rerun installdata()", file=sys.stderr)
 
 
     

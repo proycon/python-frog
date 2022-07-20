@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from distutils.core import setup, Extension
 from Cython.Distutils import build_ext
+from Cython.Build import cythonize
 import platform
 import os
 
@@ -31,15 +32,18 @@ if platform.system() == "Darwin":
 else:
     extra_options = ['-D U_USING_ICU_NAMESPACE=1']
 
-extensions = [ Extension("frog",
-                [ "libfolia_classes.pxd", "frog_classes.pxd", "frog_wrapper.pyx"],
-                language='c++',
-                include_dirs=includedirs,
-                library_dirs=libdirs,
-                libraries=['frog','ucto','folia'],
-                extra_compile_args=['--std=c++0x'] + extra_options,
-                pyrex_gdb=True
-                ) ]
+extensions = cythonize([ 
+                        Extension("frog",
+                            [ "libfolia_classes.pxd", "frog_classes.pxd", "frog_wrapper.pyx"],
+                            language='c++',
+                            include_dirs=includedirs,
+                            library_dirs=libdirs,
+                            libraries=['frog','ucto','folia'],
+                            extra_compile_args=['--std=c++0x'] + extra_options) 
+                       ],
+                compiler_directives={"language_level": "3"}
+                )
+
 
 setup(
     name = 'python-frog',
