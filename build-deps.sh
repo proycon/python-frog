@@ -1,7 +1,8 @@
 #!/bin/sh
 
 # Builds dependencies (latest stable releases) from source
-# Used for building wheels
+# Used for building wheels. Invoke via 'make wheels' rather
+# than directly!
 
 set -e
 
