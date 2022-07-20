@@ -43,16 +43,16 @@ extensions = [ Extension("frog",
 
 setup(
     name = 'python-frog',
-    version = '0.5.1',
+    version = '0.6.0', #also ensure UCTODATAVERSION and FROGDATAVERSION are good in frog_wrapper.pyx
     author = "Maarten van Gompel",
     author_email = "proycon@anaproy.nl",
     description = ("Python binding to FROG, an NLP suite for Dutch doing part-of-speech tagging, lemmatisation, morphological analysis, named-entity recognition, shallow parsing, and dependency parsing."),
-    license = "GPL",
+    license = "GPLv3",
     keywords = "nlp computational_linguistics dutch pos lemmatizer",
     url = "https://github.com/proycon/python-frog",
     ext_modules = extensions,
     cmdclass = {'build_ext': build_ext},
-    requires = ['frog (>=0.24)'],
+    requires = ['frog (>=0.25)'],
     install_requires=['Cython'],
     classifiers=[
         "Development Status :: 5 - Production/Stable",

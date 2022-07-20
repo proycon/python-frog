@@ -41,11 +41,18 @@ Alpine Linux
 
 First install Cython and Frog (``apk add cython frog frog-dev``), then ``pip install python-frog`` (preferably in a Python virtual environment)
 
+Arch Linux
+~~~~~~~~~~~~~~
+
+You can alternatively use the `AUR package <https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=python-frog-git>`_ .
+
+
 macOS
 ~~~~~~~~
 
-First use homebrew to install `Frog <https://languagemachines.github.io/frog>`_::
+First use `homebrew <https://brew.sh/>`_ to install `Frog <https://languagemachines.github.io/frog>`_::
 
+    brew tap fbkarsdorp/homebrew-lamachine
     brew install frog
 
 Then install this binding using ``pip`` (preferably in a Python virtual environment)::

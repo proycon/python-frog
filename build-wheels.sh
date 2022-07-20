@@ -14,6 +14,7 @@ SYSTEM_PACKAGES=$3
 PRE_BUILD_COMMAND=$4
 PACKAGE_PATH=$5
 PIP_WHEEL_ARGS=$6
+BUILD_DEPS_OPTS=$7
 
 # Temporary workaround for LD_LIBRARY_PATH issue. See
 # https://github.com/RalfG/python-wheels-manylinux-build/issues/26

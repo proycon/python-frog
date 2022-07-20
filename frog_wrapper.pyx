@@ -21,6 +21,7 @@ cimport libfolia_classes
 cimport frog_classes
 
 FROGDATAVERSION = "0.20"
+UCTODATAVERSION = "0.8"
 
 try:
     from folia.main import Document as FoliaPyDocument
@@ -140,7 +141,6 @@ cdef class FrogOptions:
 cdef class Frog:
     cdef frog_classes.FrogAPI * capi
     cdef FrogOptions options
-    cdef frog_classes.Configuration configuration
     cdef frog_classes.LogStream logstream
     cdef frog_classes.LogStream debuglogstream
 
@@ -153,22 +153,21 @@ cdef class Frog:
             for key, value in overrides.item():
                 v = key + "=" + value
                 options.capi.insert(<string>"override", <string>v)
-        self.options = options
 
         if configurationfile:
-            if not os.path.exists(configurationfile):
-                #better let Python handle  this rather than the binding, so the interpreter can recover:
+            if configurationfile.startswith("/") and not os.path.exists(configurationfile):
+                #better let Python handle  this rather than the binding, so the interpreter can recover
+                #When the configurationfile is not absolute thouugh, we let frog handle it (will search in the default config dirs but may come back with a hard failure!)
                 raise FileNotFoundError(f"Specified configuration file {configurationfile} does not exist!")
-            self.configuration.fill(configurationfile.encode('utf-8'))
+            options.capi.insert(<string>"config", <string>configurationfile.encode("utf-8"))
         else:
             configurationfile = self.capi.defaultConfigFile("nld")
             if not os.path.exists(configurationfile):
-                configurationfile = os.path.join(localpath(), "nld", "frog.cfg")
-                if not os.path.exists(configurationfile):
-                    #better let Python handle  this rather than the binding, so the interpreter can recover:
-                    raise FileNotFoundError(f"Default configuration file {configurationfile} does not exist! Try running frog.installdata() first")
-            self.configuration.fill(configurationfile)
+                #better let Python handle  this rather than the binding, so the interpreter can recover:
+                raise FileNotFoundError(f"Default configuration file {configurationfile} does not exist! Try running frog.installdata() first")
+            #(we don't pass this on because Frog will repeat the same logic by default)
 
+        self.options = options
         self.capi = new frog_classes.FrogAPI(options.capi, &self.logstream, &self.debuglogstream)
 
 
@@ -227,16 +226,34 @@ cdef class Frog:
             return text.encode('utf-8')
         return text #already was bytes or python2 str
 
-def localpath():
-    xdg_config_dir = os.environ.get("XDG_CONFIG_DIR", os.path.join(os.environ.get("HOME",""), ".config"))
-    return os.environ.get("FROGDATAPATH", os.path.join(xdg_config_dir,"frog") )
+def localpath(name="frog"):
+    xdg_config_dir = os.environ.get("XDG_CONFIG_HOME", os.path.join(os.environ.get("HOME",""), ".config"))
+    return os.environ.get("FROGDATAPATH", os.path.join(xdg_config_dir,name) )
 
-def installdata(targetdir=None, version=FROGDATAVERSION):
+def installdata(targetdir=None, frogdataversion=FROGDATAVERSION, uctodataversion=UCTODATAVERSION):
     if targetdir is None:
-        targetdir = localpath()
-    tmpdir=os.environ.get("TMPDIR","/tmp")
-    if os.system(f"cd {tmpdir} && mkdir -p {targetdir} && wget -O frogdata.tar.gz https://github.com/LanguageMachines/frogdata/releases/download/v{version}/frogdata-{version}.tar.gz && tar -xzf frogdata.tar.gz && cd frogdata-{version} && mv config/* {targetdir}/ && cd .. && rm -Rf frogdata-{version} && rm -Rf frogdata.tar.gz") != 0:
-        raise Exception("Installation failed")
+        uctodir = localpath("ucto")
+    else:
+        uctodir = os.path.join(targetdir,"ucto")
+    if os.path.exists(uctodir):
+        print(f"Uctodata configuration directory already exists: {uctodir}, refusing to overwrite, please remove it first if you want to install the data anew.", file=sys.stderr)
+    else:
+        tmpdir=os.environ.get("TMPDIR","/tmp")
+        if os.system(f"cd {tmpdir} && mkdir -p {uctodir} && wget -O uctodata.tar.gz https://github.com/LanguageMachines/uctodata/releases/download/v{uctodataversion}/uctodata-{uctodataversion}.tar.gz && tar -xzf uctodata.tar.gz && cd uctodata-{uctodataversion} && mv config/* {uctodir}/ && cd .. && rm -Rf uctodata-{uctodataversion} && rm -Rf uctodata.tar.gz") != 0:
+            raise Exception("Installation of uctodata failed")
+        print(f"Installation of uctodata {uctodataversion} complete", file=sys.stderr)
+
+    if targetdir is None:
+        frogdir = localpath()
+    else:
+        frogdir = os.path.join(targetdir,"frog")
+    if os.path.exists(frogdir):
+        print(f"Frogdata configuration directory already exists: {frogdir}, refusing to overwrite, please remove it first if you want to install the data anew.", file=sys.stderr)
+    else:
+        tmpdir=os.environ.get("TMPDIR","/tmp")
+        if os.system(f"cd {tmpdir} && mkdir -p {frogdir} && wget -O frogdata.tar.gz https://github.com/LanguageMachines/frogdata/releases/download/v{frogdataversion}/frogdata-{frogdataversion}.tar.gz && tar -xzf frogdata.tar.gz && cd frogdata-{frogdataversion} && mv config/* {frogdir}/ && cd .. && rm -Rf frogdata-{frogdataversion} && rm -Rf frogdata.tar.gz") != 0:
+            raise Exception("Installation of frogdata failed")
+        print(f"Installation of frogdata {frogdataversion} complete", file=sys.stderr)
 
 
 
