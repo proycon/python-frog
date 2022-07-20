@@ -136,7 +136,7 @@ jobs:
           CXX: ${{ matrix.compiler }}
         run: |
           git clone https://github.com/LanguageMachines/frog;
-          cd frogdata;
+          cd frog;
           bash bootstrap.sh;
           ./configure;
           make;
