@@ -21,7 +21,7 @@ cimport libfolia_classes
 cimport frog_classes
 
 FROGDATAVERSION = "0.20"
-UCTODATAVERSION = "0.8"
+UCTODATAVERSION = "0.9.1"
 
 try:
     from folia.main import Document as FoliaPyDocument
