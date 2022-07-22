@@ -5,17 +5,18 @@ SYSTEM_PACKAGES=libicu-devel libxml2-devel libxslt-devel libexttextcat zlib-deve
 PRE_BUILD_COMMAND=/io/build-deps.sh
 PACKAGE_PATH=
 PIP_WHEEL_ARGS=-w ./dist --no-deps
+TAG=latest
 
 .PHONY: wheels
 wheels:
-	docker pull quay.io/pypa/manylinux_2_28_x86_64
-	docker run --rm -e PLAT=manylinux_2_28_x86_64 -v `pwd`:/io quay.io/pypa/manylinux_2_28_x86_64 /io/build-wheels.sh "${PY_VERSIONS}" "${BUILD_REQUIREMENTS}" "${SYSTEM_PACKAGES}" "${PRE_BUILD_COMMAND}" "${PACKAGE_PATH}" "${PIP_WHEEL_ARGS}"
+	docker pull quay.io/pypa/manylinux_2_28_x86_64:${TAG}
+	docker run --rm -e PLAT=manylinux_2_28_x86_64 -v `pwd`:/io quay.io/pypa/manylinux_2_28_x86_64:${TAG} /io/build-wheels.sh "${PY_VERSIONS}" "${BUILD_REQUIREMENTS}" "${SYSTEM_PACKAGES}" "${PRE_BUILD_COMMAND}" "${PACKAGE_PATH}" "${PIP_WHEEL_ARGS}"
 
 .PHONY: devwheels
 devwheels:
 	#builds against latest development versions of everything, these wheels should NOT be published!
-	docker pull quay.io/pypa/manylinux_2_28_x86_64
-	docker run --rm -e PLAT=manylinux_2_28_x86_64 -v `pwd`:/io quay.io/pypa/manylinux_2_28_x86_64 /io/build-wheels.sh "${PY_VERSIONS}" "${BUILD_REQUIREMENTS}" "${SYSTEM_PACKAGES}" "${PRE_BUILD_COMMAND} --devel" "${PACKAGE_PATH}" "${PIP_WHEEL_ARGS}"
+	docker pull quay.io/pypa/manylinux_2_28_x86_64:${TAG}
+	docker run --rm -e PLAT=manylinux_2_28_x86_64 -v `pwd`:/io quay.io/pypa/manylinux_2_28_x86_64:${TAG} /io/build-wheels.sh "${PY_VERSIONS}" "${BUILD_REQUIREMENTS}" "${SYSTEM_PACKAGES}" "${PRE_BUILD_COMMAND} --devel" "${PACKAGE_PATH}" "${PIP_WHEEL_ARGS}"
 	echo "Built against development versions, DO NOT PUBLISH these wheels!"
 
 .PHONY: install
