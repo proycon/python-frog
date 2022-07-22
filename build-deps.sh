@@ -32,6 +32,9 @@ if [ "$ID" = "almalinux" ] || [ "$ID" = "centos" ] || [ "$ID" = "rhel" ]; then
 fi
 
 [ -z "$PREFIX" ] && PREFIX="/usr/local/"
+PWD="$(pwd)"
+BUILDDIR="$(mktemp -dt "build-deps.XXXXXX")"
+cd "$BUILDDIR"
 for PACKAGE in tklauser/libtar LanguageMachines/ticcutils LanguageMachines/libfolia LanguageMachines/uctodata LanguageMachines/ucto LanguageMachines/timbl LanguageMachines/mbt LanguageMachines/frogdata LanguageMachines/frog; do
     echo "Git cloning $PACKAGE ">&2
     git clone https://github.com/$PACKAGE
@@ -57,5 +60,7 @@ for PACKAGE in tklauser/libtar LanguageMachines/ticcutils LanguageMachines/libfo
     make install
     cd ..
 done
+cd $PWD
+[ -n "$BUILDDIR" ] && rm -Rf "$BUILDDIR"
 
 echo "Dependencies installed" >&2
