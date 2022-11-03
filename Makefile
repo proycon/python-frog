@@ -1,4 +1,4 @@
-PY_VERSIONS=cp36-cp36m cp37-cp37m cp38-cp38 cp39-cp39 cp310-cp310
+PY_VERSIONS=cp36-cp36m cp37-cp37m cp38-cp38 cp39-cp39 cp310-cp310 cp311-cp311
 BUILD_REQUIREMENTS=cython
 #system packages (yum, manylinux_2_28 uses AlmaLinux)
 SYSTEM_PACKAGES_RHEL=libicu-devel libxml2-devel libxslt-devel libexttextcat zlib-devel bzip2-devel libtool autoconf-archive autoconf automake m4 wget
