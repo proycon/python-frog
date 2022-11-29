@@ -66,7 +66,17 @@ Then install this binding using ``pip`` (preferably in a Python virtual environm
 Windows
 ~~~~~~~~~~
 
-Not supported natively, but you should be able to use the Frog python binding if you use WSL.
+Not supported natively, but you should be able to use the Frog python binding if you use WSL, or using Docker containers (see below).
+
+Docker/OCI Containers
+~~~~~~~~~~~~~~~~~~~~~~~
+
+A Docker/OCI container image is available containing Python, frog, and python-frog::
+
+    docker pull proycon/python-frog
+    docker run -t -i proycon/python-frog
+
+You can also build the container from scratch from this repository with the included `Dockerfile`.
 
 Usage
 ------------------
