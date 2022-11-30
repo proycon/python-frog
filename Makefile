@@ -10,7 +10,10 @@ PIP_WHEEL_ARGS=-w ./dist --no-deps
 TAG=latest
 
 .PHONY: wheels
-wheels: muslwheels
+wheels: manywheels muslwheels
+
+.PHONY: manywheels
+manywheels:
 	docker pull quay.io/pypa/manylinux_2_28_x86_64:${TAG}
 	docker run --rm -e PLAT=manylinux_2_28_x86_64 -v `pwd`:/io quay.io/pypa/manylinux_2_28_x86_64:${TAG} /io/build-wheels.sh "${PY_VERSIONS}" "${BUILD_REQUIREMENTS}" "${SYSTEM_PACKAGES_RHEL}" "${PRE_BUILD_COMMAND}" "${PACKAGE_PATH}" "${PIP_WHEEL_ARGS}"
 
