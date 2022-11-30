@@ -58,6 +58,7 @@ setup(
     cmdclass = {'build_ext': build_ext},
     requires = ['frog (>=0.25)'],
     install_requires=['Cython'],
+    data_files = [("sources",["frog_wrapper.pyx"])],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Topic :: Text Processing :: Linguistic",
