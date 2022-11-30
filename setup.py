@@ -9,12 +9,22 @@ import os
 includedirs = []
 libdirs = []
 if platform.system() == "Darwin":
-    #we are running on Mac OS X with homebrew, stuff is in specific locations:
-    libdirs.append("/usr/local/opt/icu4c/lib")
-    includedirs.append("/usr/local/opt/icu4c/include")
-    libdirs.append("/usr/local/opt/libxml2/lib")
-    includedirs.append("/usr/local/opt/libxml2/include")
-    includedirs.append("/usr/local/opt/libxml2/include/libxml2")
+    #we are running on Mac OS X (with homebrew hopefully), stuff is in specific locations:
+    if platform.machine().lower() == "arm64":
+        libdirs.append("/opt/homebrew/lib")
+        includedirs.append("/opt/homebrew/include")
+        libdirs.append("/opt/homebrew/icu4c/lib")
+        includedirs.append("/opt/homebrew/icu4c/include")
+        libdirs.append("/opt/homebrew/libxml2/lib")
+        includedirs.append("/opt/homebrew/libxml2/include")
+        includedirs.append("/opt/homebrew/libxml2/include/libxml2")
+    else:
+        #we are running on Mac OS X with homebrew, stuff is in specific locations:
+        libdirs.append("/usr/local/opt/icu4c/lib")
+        includedirs.append("/usr/local/opt/icu4c/include")
+        libdirs.append("/usr/local/opt/libxml2/lib")
+        includedirs.append("/usr/local/opt/libxml2/include")
+        includedirs.append("/usr/local/opt/libxml2/include/libxml2")
 
 #add some common default paths
 includedirs += ['/usr/include/', '/usr/include/libxml2','/usr/local/include/' ]
@@ -47,7 +57,7 @@ extensions = cythonize([
 
 setup(
     name = 'python-frog',
-    version = '0.6.0', #also ensure UCTODATAVERSION and FROGDATAVERSION are good in frog_wrapper.pyx
+    version = '0.6.1', #also ensure UCTODATAVERSION and FROGDATAVERSION are good in frog_wrapper.pyx
     author = "Maarten van Gompel",
     author_email = "proycon@anaproy.nl",
     description = ("Python binding to FROG, an NLP suite for Dutch doing part-of-speech tagging, lemmatisation, morphological analysis, named-entity recognition, shallow parsing, and dependency parsing."),
