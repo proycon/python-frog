@@ -20,14 +20,11 @@ dependency parsing. The tool itself is implemented in C++
 Installation
 ----------------
 
-Linux
-~~~~~~~~~~
-
-On modern Linux distributions, we recommend you use a Python virtual environment and install using ``pip``::
+We recommend you use a Python virtual environment and install using ``pip``::
 
     pip install python-frog
 
-When possible on your system (glibc >= 2.28, x86_64), this will install the binary
+When possible on your system, this will install the binary
 Python wheels *that include Frog and all necessary dependencies* **except for**
 frogdata. To download and install the data (in ``~/.config/frog``) you then only need to
 run the following once::
@@ -38,35 +35,21 @@ If you want language detection support, ensure you the have `libexttextcat`
 package (if provided by your distribution) installed prior to executing the
 above command.
 
-If the binary wheels are not available for your distribution, you will need to first install Frog yourself.
+If the binary wheels are not available for your system, you will need to first
+install `Frog <https://github.com/LanguageMachines/frog>`_ yourself and then
+run ``pip install python-frog`` to install this python binding, it will then be
+compiled from source. The following instructions apply in that case:
 
-Alpine Linux
-~~~~~~~~~~~~~~
+On Arch Linux, you can alternatively use the `AUR package <https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=python-frog-git>`_ .
 
-First install Cython and Frog (``apk add cython frog frog-dev``), then ``pip install python-frog`` (preferably in a Python virtual environment)
-
-Arch Linux
-~~~~~~~~~~~~~~
-
-You can alternatively use the `AUR package <https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=python-frog-git>`_ .
-
-
-macOS
-~~~~~~~~
-
-First use `homebrew <https://brew.sh/>`_ to install `Frog <https://languagemachines.github.io/frog>`_::
+On macOS; first use `homebrew <https://brew.sh/>`_ to install `Frog <https://languagemachines.github.io/frog>`_::
 
     brew tap fbkarsdorp/homebrew-lamachine
-    brew install frog
+    brew install ucto
 
-Then install this binding using ``pip`` (preferably in a Python virtual environment)::
+On Alpine Linux, run: ``apk add cython frog frog-dev``
 
-    pip install python-frog
-
-Windows
-~~~~~~~~~~
-
-Not supported natively, but you should be able to use the Frog python binding if you use WSL, or using Docker containers (see below).
+Windows is not supported natively at all, but you should be able to use the Ucto python binding if you use WSL, or using Docker containers (see below).
 
 Docker/OCI Containers
 ~~~~~~~~~~~~~~~~~~~~~~~
