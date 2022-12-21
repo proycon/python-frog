@@ -68,9 +68,9 @@ Example:
 
 .. code:: python
 
-    import frog
+    from frog import Frog, FrogOptions
 
-    frog = frog.Frog(frog.FrogOptions(parser=False))
+    frog = Frog(FrogOptions(parser=False))
     output = frog.process_raw("Dit is een test")
     print("RAW OUTPUT=",output)
     output = frog.process("Dit is nog een test.")
@@ -124,14 +124,14 @@ used:
 
 .. code:: python
 
-    frog = frog.Frog(frog.FrogOptions(parser=False), "/path/to/your/frog.cfg")
+    frog = Frog(FrogOptions(parser=False), "/path/to/your/frog.cfg")
 
 A third parameter, a dictionary, can be used to override specific configuration values (same syntax as Frog's
 ``--override`` option), you may want to leave the second parameter empty if you want to load the default configuration:
 
 .. code:: python
 
-    frog = frog.Frog(frog.FrogOptions(parser=False), "", { "tokenizer.rulesFile": "tokconfig-nld-twitter" })
+    frog = Frog(FrogOptions(parser=False), "", { "tokenizer.rulesFile": "tokconfig-nld-twitter" })
 
 FoLiA support
 ------------------
