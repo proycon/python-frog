@@ -39,7 +39,7 @@ jobs:
            CIBW_BEFORE_ALL_MACOS: >
               brew tap fbkarsdorp/homebrew-lamachine &&
               brew install frog
-           CIBW_MANYLINUX_X86_64_IMAGE: quay.io/pypa/manylinux_2_28_x86_64
+           CIBW_MANYLINUX_X86_64_IMAGE: quay.io/pypa/manylinux2014_x86_64
            CIBW_SKIP: "*-win* *-manylinux_i686 pp*"
 
       - uses: actions/upload-artifact@v3
