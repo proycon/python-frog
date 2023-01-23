@@ -21,6 +21,7 @@ get_latest_version() {
     fi
 }
 
+[ -z "$PREFIX" ] && PREFIX="/usr/local/"
 if [ "$ID" = "almalinux" ] || [ "$ID" = "centos" ] || [ "$ID" = "rhel" ]; then
     if [ -d /usr/local/share/aclocal ]; then
         #needed for manylinux_2_28 container which ships custom autoconf, possibly others too?
@@ -36,7 +37,7 @@ if [ "$ID" = "almalinux" ] || [ "$ID" = "centos" ] || [ "$ID" = "rhel" ]; then
             wget https://download.gnome.org/sources/libxml2/2.9/libxml2-2.9.14.tar.xz
             unxz libxml2-2.9.14.tar.xz
             tar -xf libxml2-2.9.14.tar
-            cd libxml2-2.9.14 && ./configure --prefix=/usr/ --without-python && make && make install
+            cd libxml2-2.9.14 && ./configure --prefix=$PREFIX --without-python && make && make install
             cd ..
         fi
     elif [ "$VERSION_ID" = "8" ]; then
@@ -46,7 +47,6 @@ if [ "$ID" = "almalinux" ] || [ "$ID" = "centos" ] || [ "$ID" = "rhel" ]; then
     fi
 fi
 
-[ -z "$PREFIX" ] && PREFIX="/usr/local/"
 PWD="$(pwd)"
 BUILDDIR="$(mktemp -dt "build-deps.XXXXXX")"
 cd "$BUILDDIR"
