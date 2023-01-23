@@ -57,16 +57,16 @@ extensions = cythonize([
 
 setup(
     name = 'python-frog',
-    version = '0.6.2', #also ensure UCTODATAVERSION and FROGDATAVERSION are good in frog_wrapper.pyx
+    version = '0.6.3', #also ensure UCTODATAVERSION and FROGDATAVERSION are good in frog_wrapper.pyx
     author = "Maarten van Gompel",
     author_email = "proycon@anaproy.nl",
-    description = ("Python binding to FROG, an NLP suite for Dutch doing part-of-speech tagging, lemmatisation, morphological analysis, named-entity recognition, shallow parsing, and dependency parsing."),
+    description = ("Python binding to Frog, an NLP suite for Dutch doing part-of-speech tagging, lemmatisation, morphological analysis, named-entity recognition, shallow parsing, and dependency parsing."),
     license = "GPLv3",
     keywords = "nlp computational_linguistics dutch pos lemmatizer",
     url = "https://github.com/proycon/python-frog",
     ext_modules = extensions,
     cmdclass = {'build_ext': build_ext},
-    requires = ['frog (>=0.26)'],
+    requires = ['frog (>=0.26)','ucto (>=0.27)'],
     install_requires=['Cython'],
     data_files = [("sources",["frog_wrapper.pyx"])],
     classifiers=[
