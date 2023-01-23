@@ -50,7 +50,7 @@ fi
 PWD="$(pwd)"
 BUILDDIR="$(mktemp -dt "build-deps.XXXXXX")"
 cd "$BUILDDIR"
-for PACKAGE in tklauser/libtar LanguageMachines/ticcutils LanguageMachines/libfolia LanguageMachines/uctodata LanguageMachines/ucto LanguageMachines/timbl LanguageMachines/mbt LanguageMachines/frogdata LanguageMachines/frog; do
+for PACKAGE in LanguageMachines/ticcutils LanguageMachines/libfolia LanguageMachines/uctodata LanguageMachines/ucto LanguageMachines/timbl LanguageMachines/mbt LanguageMachines/frogdata LanguageMachines/frog; do
     echo "Git cloning $PACKAGE ">&2
     git clone https://github.com/$PACKAGE
     PACKAGE="$(basename $PACKAGE)"
