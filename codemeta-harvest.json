@@ -1,0 +1,18 @@
+{
+    "funding": {
+        "@type": "Grant",
+        "name": "CLARIAH-PLUS (NWO grant 184.034.023)",
+        "funder": {
+            "@type": "Organization",
+            "name": "NWO", 
+            "url": "https://www.nwo.nl"
+        }
+    },
+    "producer": {
+        "@type": "Organization",
+        "name": "KNAW Humanities Cluster",
+        "url": "https://huc.knaw.nl"
+    },
+    "applicationCategory": [ "https://vocabs.dariah.eu/tadirah/annotating", "https://vocabs.dariah.eu/tadirah/tagging", "https://vocabs.dariah.eu/tadirah/namedEntityRecognition", "https://vocabs.dariah.eu/tadirah/posTagging", "https://vocabs.dariah.eu/tadirah/segmenting", "https://vocabs.dariah.eu/tadirah/treeTagging", "https://vocabs.dariah.eu/tadirah/contextualizing" , "https://w3id.org/nwo-research-fields#Linguistics", "https://w3id.org/nwo-research-fields#TextualAndContentAnalysis" ],
+	"developmentStatus": [ "https://www.repostatus.org/#active", "https://w3id.org/research-technology-readiness-levels#Level9Proven" ],
+}
