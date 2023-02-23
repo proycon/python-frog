@@ -259,7 +259,7 @@ def installdata(targetdir=None, frogdataversion=FROGDATAVERSION, uctodataversion
     if os.path.isdir(textcatpath):
         if os.system(f"cd {uctodir} && wget -O textcat.cfg https://raw.githubusercontent.com/LanguageMachines/ucto/master/config/textcat.cfg") != 0:
             raise Exception("Installation of textcat.cfg failed.")
-        if textcatpath[-1] = '/': textcatpath = textcatpath[:-1]
+        if textcatpath[-1] == '/': textcatpath = textcatpath[:-1]
         if textcatpath != "/usr/share/libexttextcat":
             data = open(f"{uctodir}/textcat.cfg",'r',encoding='utf-8').read()
             with open(f"{uctodir}/textcat.cfg",'w',encoding='utf-8').read()
