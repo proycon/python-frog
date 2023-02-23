@@ -255,11 +255,17 @@ def installdata(targetdir=None, frogdataversion=FROGDATAVERSION, uctodataversion
             raise Exception("Installation of frogdata failed")
         print(f"Installation of frogdata {frogdataversion} complete", file=sys.stderr)
 
-    if os.path.isdir("/usr/share/libexttextcat"):
+    textcatpath = os.environ.get("TEXTCATPATH","/usr/share/libexttextcat")
+    if os.path.isdir(textcatpath):
         if os.system(f"cd {uctodir} && wget -O textcat.cfg https://raw.githubusercontent.com/LanguageMachines/ucto/master/config/textcat.cfg") != 0:
             raise Exception("Installation of textcat.cfg failed.")
+        if textcatpath[-1] = '/': textcatpath = textcatpath[:-1]
+        if textcatpath != "/usr/share/libexttextcat":
+            data = open(f"{uctodir}/textcat.cfg",'r',encoding='utf-8').read()
+            with open(f"{uctodir}/textcat.cfg",'w',encoding='utf-8').read()
+                f.write(data.replace("/usr/share/libexttextcat", textcatpath))
     else:
-        print("Language detection will not be available unless you install libexttextcat and rerun installdata()", file=sys.stderr)
+        print("Language detection will not be available unless you install libexttextcat and rerun installdata(). Libexttextcat was not found. If it is in a non-standard location, set environment variable TEXTCATPATH (defaults to /usr/share/libexttextcat) prior to calling installdata()", file=sys.stderr)
 
 
     
