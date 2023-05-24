@@ -66,7 +66,7 @@ setup(
     url = "https://github.com/proycon/python-frog",
     ext_modules = extensions,
     cmdclass = {'build_ext': build_ext},
-    requires = ['frog (>=0.27)','ucto (>=0.28)'],
+    requires = ['frog (>=0.30)','ucto (>=0.29)'],
     install_requires=['Cython'],
     data_files = [("sources",["frog_wrapper.pyx"])],
     classifiers=[
