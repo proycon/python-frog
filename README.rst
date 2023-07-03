@@ -17,6 +17,11 @@ morphological analysis, named entity recognition, shallow parsing, and
 dependency parsing. The tool itself is implemented in C++
 (https://languagemachines.github.io/frog). The binding requires Python 3.6 or higher.
 
+Demo
+------------------
+
+.. image:: https://raw.githubusercontent.com/CLARIAH/wp3-demos/master/python-frog.gif 
+
 Installation
 ----------------
 
@@ -161,7 +166,3 @@ An example can be found below:
     for word in output.words():
         print(word.text() + " " + word.pos() + " " + word.lemma())
 
-Demo
-------------------
-
-.. image:: https://raw.githubusercontent.com/CLARIAH/wp3-demos/master/python-frog.gif 
