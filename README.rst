@@ -161,5 +161,7 @@ An example can be found below:
     for word in output.words():
         print(word.text() + " " + word.pos() + " " + word.lemma())
 
+Demo
+------------------
 
-
+.. image:: https://raw.githubusercontent.com/CLARIAH/wp3-demos/master/python-frog.gif 
