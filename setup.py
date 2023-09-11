@@ -44,7 +44,7 @@ else:
 
 extensions = cythonize([ 
                         Extension("frog",
-                            [ "libfolia_classes.pxd", "frog_classes.pxd", "frog_wrapper.pyx"],
+                            [ "frog_wrapper.pyx"],
                             language='c++',
                             include_dirs=includedirs,
                             library_dirs=libdirs,
