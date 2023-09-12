@@ -49,6 +49,7 @@ jobs:
               wget https://software.wise-guys.nl/download/libtextcat-2.2.tar.gz && 
               tar xzf libtextcat-2.2.tar.gz &&
               cd libtextcat-2.2 && autoreconf -i &&  ./configure && make && make install &&
+              mkdir /usr/local/include/libtextcat/ && cp src/*.h /usr/local/include/libtextcat/ &&
               cd ../ &&
               git clone https://github.com/LanguageMachines/frog &&
               cd frog &&
