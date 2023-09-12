@@ -45,6 +45,11 @@ jobs:
               git clone https://gitlab.gnome.org/GNOME/libxml2 &&
               cd libxml2 &&
               autoreconf --install && ./configure && make && make install &&
+              cd ../ &&
+              wget https://software.wise-guys.nl/download/libtextcat-2.2.tar.gz && 
+              tar xzf libtextcat-2.2.tar.gz &&
+              cd libtextcat && autoreconf -i &&  ./configure && make && make install &&
+              cd ../ &&
               git clone https://github.com/LanguageMachines/frog &&
               cd frog &&
               ./build-deps.sh &&
