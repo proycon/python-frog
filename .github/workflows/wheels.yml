@@ -41,7 +41,7 @@ jobs:
               git clone https://github.com/tukaani-project/xz &&
               cd xz &&
               autoreconf --install && ./configure && make && make install &&
-              cd ..
+              cd .. &&
               git clone https://github.com/unicode-org/icu &&
               cd icu/icu4c/source &&
               ./configure && make && make install && ls -l /usr/local/lib/libicu* &&
