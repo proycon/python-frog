@@ -37,8 +37,15 @@ jobs:
               fi &&
               ./build-deps.sh
            CIBW_BEFORE_ALL_MACOS: >
-              brew tap fbkarsdorp/homebrew-lamachine &&
-              brew install frog
+              brew install pkg-config icu4c &&
+              git clone https://gitlab.gnome.org/GNOME/libxml2 &&
+              cd libxml2 &&
+              autoreconf --install && ./configure && make && make install &&
+              git clone https://github.com/LanguageMachines/frog &&
+              cd frog &&
+              ./build-deps.sh &&
+              ./configure &&
+              make && make install
            CIBW_MANYLINUX_X86_64_IMAGE: quay.io/pypa/manylinux2014_x86_64
            CIBW_SKIP: "*-win* *-manylinux_i686 pp*"
 
