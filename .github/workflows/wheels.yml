@@ -25,7 +25,7 @@ jobs:
         run: python -m cibuildwheel --output-dir wheelhouse
         env:
            CIBW_ARCHS_LINUX: "x86_64"
-           CIBW_ARCHS_MACOS: "x86_64 arm64"
+           CIBW_ARCHS_MACOS: "x86_64"
            CIBW_BEFORE_ALL_LINUX: >
               if command -v apt-get; then
                 apt-get -y git libicu-dev libxml2-dev libexttextcat-dev libxslt1-dev libbz2-dev zlib1g-dev autoconf automake autoconf-archive libtool autotools-dev gcc g++ make
