@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04, macOS-12]
+        os: [ubuntu-20.04, macOS-11]
 
     steps:
       - uses: actions/checkout@v3
@@ -37,29 +37,8 @@ jobs:
               fi &&
               ./build-deps.sh
            CIBW_BEFORE_ALL_MACOS: >
-              brew install pkg-config autoconf-archive autoconf automake &&
-              git clone https://github.com/tukaani-project/xz &&
-              cd xz &&
-              autoreconf --install && ./configure && make && make install &&
-              cd .. &&
-              git clone https://github.com/unicode-org/icu &&
-              cd icu/icu4c/source &&
-              ./configure && make && make install && ls -l /usr/local/lib/libicu* &&
-              cd ../../../ &&
-              git clone https://gitlab.gnome.org/GNOME/libxml2 &&
-              cd libxml2 &&
-              autoreconf --install && ./configure && make && make install &&
-              cd ../ &&
-              wget https://software.wise-guys.nl/download/libtextcat-2.2.tar.gz && 
-              tar xzf libtextcat-2.2.tar.gz &&
-              cd libtextcat-2.2 && autoreconf -i &&  ./configure && make && make install &&
-              mkdir /usr/local/include/libtextcat/ && cp src/*.h /usr/local/include/libtextcat/ &&
-              cd ../ &&
-              git clone https://github.com/LanguageMachines/frog &&
-              cd frog &&
-              ./build-deps.sh &&
-              ./bootstrap.sh &&
-              ./configure && make && make install
+              brew tap fbkarsdorp/homebrew-lamachine &&
+              brew install frog
            CIBW_MANYLINUX_X86_64_IMAGE: quay.io/pypa/manylinux2014_x86_64
            CIBW_SKIP: "*-win* *-manylinux_i686 pp*"
 
