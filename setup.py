@@ -4,13 +4,16 @@ from Cython.Distutils import build_ext
 from Cython.Build import cythonize
 import platform
 import os
+import sys
 
 
 includedirs = []
 libdirs = []
+print(f"system={platform.system()} machine={platform.machine()}", file=sys.stderr)
 if platform.system() == "Darwin":
     #we are running on Mac OS X (with homebrew hopefully), stuff is in specific locations:
     if platform.machine().lower() == "arm64":
+        print("(macos arm64 detected)", file=sys.stderr)
         libdirs.append("/opt/homebrew/lib")
         includedirs.append("/opt/homebrew/include")
         libdirs.append("/opt/homebrew/icu4c/lib")
@@ -41,6 +44,8 @@ if platform.system() == "Darwin":
     extra_options = ["--stdlib=libc++",'-D U_USING_ICU_NAMESPACE=1']
 else:
     extra_options = ['-D U_USING_ICU_NAMESPACE=1']
+
+print(f"include_dirs={' '.join(includedirs)} library_dirs={' '.join(libdirs)} extra_options={' '.join(extra_options)}", file=sys.stderr)
 
 extensions = cythonize([ 
                         Extension("frog",
