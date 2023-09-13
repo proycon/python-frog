@@ -21,6 +21,10 @@ if platform.system() == "Darwin":
         libdirs.append("/opt/homebrew/libxml2/lib")
         includedirs.append("/opt/homebrew/libxml2/include")
         includedirs.append("/opt/homebrew/libxml2/include/libxml2")
+        libdirs.append("/opt/homebrew/opt/icu4c/lib")
+        includedirs.append("/opt/homebrew/opt/icu4c/include")
+        libdirs.append("/opt/homebrew/opt/libxml2/lib")
+        includedirs.append("/opt/homebrew/opt/libxml2/include")
     else:
         #we are running on Mac OS X with homebrew, stuff is in specific locations:
         libdirs.append("/usr/local/opt/icu4c/lib")
