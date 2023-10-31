@@ -20,7 +20,7 @@ import sys
 cimport libfolia_classes
 cimport frog_classes
 
-FROGDATAVERSION = "0.21"
+FROGDATAVERSION = "0.22"
 UCTODATAVERSION = "0.9.1"
 
 try:
