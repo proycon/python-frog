@@ -122,7 +122,10 @@ cdef class FrogOptions:
         elif key.lower() in ('debug','debugflag'):
             if value: self.capi.insert(<char>b"d", <string>b"1", False)
         elif key.lower() in ('docid','id'):
-            self.capi.insert(<string>b"id", <string>value)
+            if isinstance(value, bytes):
+                self.capi.insert(<string>b"id", <string>value)
+            else:
+                self.capi.insert(<string>b"id", <string>value.encode('utf-8'))
         elif key.lower() in ('numthreads','threads'):
             self.capi.insert(<string>b"threads",<string>value)
         else:
