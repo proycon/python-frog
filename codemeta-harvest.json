@@ -15,5 +15,5 @@
     },
     "contIntegration": "https://github.com/proycon/python-frog/actions/workflows/python-frog.yml",
     "applicationCategory": [ "https://vocabs.dariah.eu/tadirah/annotating", "https://vocabs.dariah.eu/tadirah/tagging", "https://vocabs.dariah.eu/tadirah/namedEntityRecognition", "https://vocabs.dariah.eu/tadirah/posTagging", "https://vocabs.dariah.eu/tadirah/segmenting", "https://vocabs.dariah.eu/tadirah/treeTagging", "https://vocabs.dariah.eu/tadirah/contextualizing" , "https://w3id.org/nwo-research-fields#Linguistics", "https://w3id.org/nwo-research-fields#TextualAndContentAnalysis" ],
-	"developmentStatus": [ "https://www.repostatus.org/#active", "https://w3id.org/research-technology-readiness-levels#Level9Proven" ],
+	"developmentStatus": [ "https://www.repostatus.org/#active", "https://w3id.org/research-technology-readiness-levels#Level9Proven" ]
 }
