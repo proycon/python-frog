@@ -53,7 +53,7 @@ jobs:
            CIBW_SKIP: "*-win* *-manylinux_i686 pp*"
 
       - name: Build wheels (macOS)
-        if: ${{ runner.os == 'macOS' }}
+        if: ${{ runner.os == 'macOS' && runner.python != "3.8" }}
         run: python -m cibuildwheel --output-dir wheelhouse
         env:
            CIBW_BUILD: ${{ matrix.python.cp }}-${{ matrix.buildplat.sys }}*
@@ -64,6 +64,7 @@ jobs:
               brew install frog
 
       - uses: actions/upload-artifact@v4
+        if: ${{ ! (runner.os == 'macOS' && runner.python == "3.8") }}
         with:
           name: ${{matrix.python.cp}}-${{matrix.buildplat.sys}}-${{matrix.buildplat.arch}}
           path: ./wheelhouse/*.whl
