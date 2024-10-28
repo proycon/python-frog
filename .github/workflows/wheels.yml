@@ -20,6 +20,7 @@ jobs:
           - { cp: "cp310",  rel: "3.10" }
           - { cp: "cp311",  rel: "3.11" }
           - { cp: "cp312",  rel: "3.12" }          
+          - { cp: "cp313",  rel: "3.13" }          
 
     steps:
       - uses: actions/checkout@v4.1.1
@@ -53,7 +54,7 @@ jobs:
            CIBW_SKIP: "*-win* *-manylinux_i686 pp*"
 
       - name: Build wheels (macOS)
-        if: ${{ runner.os == 'macOS' && runner.python != "3.8" }}
+        if: ${{ runner.os == 'macOS' && runner.python != '3.8' }}
         run: python -m cibuildwheel --output-dir wheelhouse
         env:
            CIBW_BUILD: ${{ matrix.python.cp }}-${{ matrix.buildplat.sys }}*
@@ -64,7 +65,7 @@ jobs:
               brew install frog
 
       - uses: actions/upload-artifact@v4
-        if: ${{ ! (runner.os == 'macOS' && runner.python == "3.8") }}
+        if: ${{ ! (runner.os == 'macOS' && runner.python == '3.8') }}
         with:
           name: ${{matrix.python.cp}}-${{matrix.buildplat.sys}}-${{matrix.buildplat.arch}}
           path: ./wheelhouse/*.whl
