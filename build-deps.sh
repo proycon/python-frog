@@ -7,6 +7,8 @@
 set -e
 
 . /etc/os-release
+echo "OS: $ID">&2
+echo "VERSION: $VERSION_ID">&2
 
 get_latest_version() {
     #Finds the latest git tag or falls back to returning the git default branch (usually master or main)
@@ -27,24 +29,27 @@ if [ "$ID" = "almalinux" ] || [ "$ID" = "centos" ] || [ "$ID" = "rhel" ]; then
         #needed for manylinux_2_28 container which ships custom autoconf, possibly others too?
         export ACLOCAL_PATH=/usr/share/aclocal
     fi
-    if [ "$VERSION_ID" = "7" ]; then
-        yum install -y libexttextcat-devel
-        if [ -d /opt/rh/devtoolset-10/root/usr/lib ]; then
-            #we are running in the manylinux2014 image
-            export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib:/opt/rh/devtoolset-10/root/usr/lib
-            #libxml2 is out of date, compile and install a new one
-            yum install -y xz
-            wget https://download.gnome.org/sources/libxml2/2.9/libxml2-2.9.14.tar.xz
-            unxz libxml2-2.9.14.tar.xz
-            tar -xf libxml2-2.9.14.tar
-            cd libxml2-2.9.14 && ./configure --prefix=$PREFIX --without-python && make && make install
-            cd ..
-        fi
-    elif [ "$VERSION_ID" = "8" ]; then
-        #they forgot to package libexttextcat-devel? grab one manually:
-        wget https://github.com/proycon/LaMachine/raw/master/deps/centos8/libexttextcat-devel-3.4.5-2.el8.x86_64.rpm
-        yum install -y libexttextcat-devel-3.4.5-2.el8.x86_64.rpm
-    fi
+    case $VERSION_ID in
+        7*)
+            yum install -y libexttextcat-devel
+            if [ -d /opt/rh/devtoolset-10/root/usr/lib ]; then
+                #we are running in the manylinux2014 image
+                export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib:/opt/rh/devtoolset-10/root/usr/lib
+                #libxml2 is out of date, compile and install a new one
+                yum install -y xz
+                wget https://download.gnome.org/sources/libxml2/2.9/libxml2-2.9.14.tar.xz
+                unxz libxml2-2.9.14.tar.xz
+                tar -xf libxml2-2.9.14.tar
+                cd libxml2-2.9.14 && ./configure --prefix=$PREFIX --without-python && make && make install
+                cd ..
+            fi
+            ;;
+        8*)
+            #they forgot to package libexttextcat-devel? grab one manually:
+            wget https://github.com/proycon/LaMachine/raw/master/deps/centos8/libexttextcat-devel-3.4.5-2.el8.x86_64.rpm
+            yum install -y libexttextcat-devel-3.4.5-2.el8.x86_64.rpm
+            ;;
+    esac
 fi
 
 PWD="$(pwd)"
@@ -77,5 +82,4 @@ for PACKAGE in LanguageMachines/ticcutils LanguageMachines/libfolia LanguageMach
 done
 cd $PWD
 [ -n "$BUILDDIR" ] && rm -Rf "$BUILDDIR"
-
 echo "Dependencies installed" >&2
