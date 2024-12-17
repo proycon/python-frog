@@ -58,7 +58,7 @@ extensions = cythonize([
                             include_dirs=includedirs,
                             library_dirs=libdirs,
                             libraries=['frog','ucto','folia'],
-                            extra_compile_args=['--std=c++0x'] + extra_options) 
+                            extra_compile_args=['--std=c++17'] + extra_options) 
                        ],
                 compiler_directives={"language_level": "3"}
                 )
