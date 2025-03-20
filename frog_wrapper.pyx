@@ -127,7 +127,10 @@ cdef class FrogOptions:
             else:
                 self.capi.insert(<string>b"id", <string>value.encode('utf-8'))
         elif key.lower() in ('numthreads','threads'):
-            self.capi.insert(<string>b"threads",<string>value)
+            if isinstance(value, int):
+                self.capi.insert(<string>b"threads",str(value).encode('utf-8'))
+            else:
+                self.capi.insert(<string>b"threads",<string>value)
         else:
             if key == 'x':
                 self.shadow['xmlin'] = True
