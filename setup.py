@@ -66,7 +66,7 @@ extensions = cythonize([
 
 setup(
     name = 'python-frog',
-    version = '0.6.11', #also ensure UCTODATAVERSION and FROGDATAVERSION are good in frog_wrapper.pyx
+    version = '0.6.12', #also ensure UCTODATAVERSION and FROGDATAVERSION are good in frog_wrapper.pyx
     author = "Maarten van Gompel",
     author_email = "proycon@anaproy.nl",
     description = ("Python binding to Frog, an NLP suite for Dutch doing part-of-speech tagging, lemmatisation, morphological analysis, named-entity recognition, shallow parsing, and dependency parsing."),
