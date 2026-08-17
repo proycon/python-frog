@@ -55,7 +55,7 @@ jobs:
            CIBW_SKIP: "*-win* *-manylinux_i686 pp*"
 
       - name: Build wheels (Linux musl)
-        if: ${{ matrix.buildplat.sys == 'musllinux' && matrix.python.cp != 'cp314' }}
+        if: ${{ matrix.buildplat.sys == 'musllinux' }}
         run: python -m cibuildwheel --output-dir wheelhouse
         env:
            CIBW_BUILD: ${{ matrix.python.cp }}-${{ matrix.buildplat.sys }}*
