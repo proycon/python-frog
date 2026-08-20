@@ -75,6 +75,7 @@ jobs:
            CIBW_ARCHS: ${{ matrix.buildplat.arch }}
            CIBW_ENVIRONMENT: "MACOSX_DEPLOYMENT_TARGET=${{ matrix.buildplat.benv }}"
            CIBW_BEFORE_ALL_MACOS: >
+              brew trust fbkarsdorp/lamachine &&
               brew tap fbkarsdorp/homebrew-lamachine &&
               brew install frog
 
