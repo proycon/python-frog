@@ -19,9 +19,9 @@ jobs:
           - { cp: "cp39",   rel: "3.9" }
           - { cp: "cp310",  rel: "3.10" }
           - { cp: "cp311",  rel: "3.11" }
-          - { cp: "cp312",  rel: "3.12" }          
-          - { cp: "cp313",  rel: "3.13" }          
-          - { cp: "cp314",  rel: "3.14" }          
+          - { cp: "cp312",  rel: "3.12" }
+          - { cp: "cp313",  rel: "3.13" }
+          - { cp: "cp314",  rel: "3.14" }
 
     steps:
       - uses: actions/checkout@v4.1.1
@@ -64,8 +64,8 @@ jobs:
               apk add build-base git autoconf-archive autoconf automake libtool bzip2-dev icu-dev libxml2-dev libexttextcat-dev libtool rsync &&
               mkdir -p /usr/local/share/aclocal/ && rsync -av --ignore-existing /usr/share/aclocal/*.m4 /usr/local/share/aclocal/ &&
               ./build-deps.sh
-           CIBW_MUSLLINUX_X86_64_IMAGE: quay.io/pypa/musllinux_1_1_x86_64
-           CIBW_MUSLLINUX_AARCH64_IMAGE: quay.io/pypa/musllinux_1_1_aarch64
+           CIBW_MUSLLINUX_X86_64_IMAGE: quay.io/pypa/musllinux_1_2_x86_64
+           CIBW_MUSLLINUX_AARCH64_IMAGE: quay.io/pypa/musllinux_1_2_aarch64
            CIBW_SKIP: "*-win* *-manylinux_i686 pp*"
 
       - name: Build wheels (macOS)
